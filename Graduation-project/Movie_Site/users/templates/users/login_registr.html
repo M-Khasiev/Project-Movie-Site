@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+
+{% if page == 'register' %}
+<div class="Myform_2">
+    <h1>Регистрация пользователя</h1>
+    <div class="inp">
+        <form action="{% url 'registration' %}" method="post" class="signup" id="signup_form">
+            {% csrf_token %}
+            {% for field in form %}
+            <br><label>{{ field.label }}: </label><br>
+            {{ field }}
+            {% endfor %}
+            <div class="info">
+                <a href="{% url 'login' %}">Авторизация</a>
+            </div>
+            <input class="btn" type="submit" value="Зарегистрироваться"/>
+        </form>
+    </div>
+</div>
+
+{% else %}
+
+<div class="Myform">
+    <h1>Авторизация</h1>
+    <div class="inp">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input class="log" type="text" name="username" placeholder="Имя">
+            <input class="pass" type="password" name="password" placeholder="Пароль">
+            <div class="info">
+                <a href="{% url 'registration' %}">Регистрация</a>
+            </div>
+            <input class="btn" type="submit" value="Войти">
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
