@@ -1634,3 +1634,65 @@ a:hover{
  .container-fluid{
     margin-top:0px;
  }
+
+ .pagination {
+    display: inline-block;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-top: 35px;
+    
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination a:hover{
+    background-color: #ff4c4c;
+}
+
+.pagination .active-btn{
+    background-color: #fa0000;
+}
+
+.button8 {
+    display: inline-block;
+    color: #ff4c4c;
+    font-weight: 700;
+    padding: .5em 2em;
+    outline: none;
+    border-radius: 3px;
+    transition: 0.2s;
+    background: #1e272e;
+  } 
+.button8:hover { background: #1e272e; }
+.button8:active { background: #1e272e; border: 2px solid; color: #fa6e6e;}
+
+.button9{
+    display: inline-block;
+    color: #00a008;
+    font-weight: 700;
+    padding: .5em 2em;
+    outline: none;
+    border-radius: 3px;
+    transition: 0.2s;
+    background: #ffffff;
+    border-color: #00a008;
+} 
+
+.button10 {
+    display: inline-block;
+    color: #000000;
+    font-weight: 700;
+    padding: .5em 2em;
+    outline: none;
+    border-radius: 3px;
+    transition: 0.2s;
+    background: red;
+  } 
+.button10:hover { background: #ff0000; }
+.button10:active { background: red; border: 2px solid; color: #fa6e6e;}

@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Movie(models.Model):
@@ -28,8 +29,11 @@ class Movie(models.Model):
     )
     url = models.SlugField(max_length=130, unique=True)
     draft = models.BooleanField("Черновик", default=False)
+    vote_total = models.IntegerField(default=0)
+    vote_ratio = models.FloatField(default=0)
     url_trailer = models.CharField(max_length=1000, default='')
     created = models.DateTimeField(auto_now_add=True)
+    adding_movie = models.ManyToManyField(User, default=None)
 
     def __str__(self):
         return self.title
@@ -37,10 +41,34 @@ class Movie(models.Model):
     def get_absolute_url(self):
         return reverse('get-movie', kwargs={'slug': self.url})
 
+    def get_absolute_url_added(self):
+        return reverse('add-movie', kwargs={'slug': self.url})
+
+    def get_absolute_url_deleting_added(self):
+        return reverse('deleting-added', kwargs={'slug': self.url})
+
+    def written_by(self):
+        return [str(p) for p in self.adding_movie.all()]
+
     class Meta:
         verbose_name = "Фильм"
         verbose_name_plural = "Фильмы"
         ordering = ['-created']
+
+    def reviewers(self):
+        queryset = self.review_set.all().values_list('owner__id', flat=True)
+        return queryset
+
+    def get_vote_count(self):
+        reviews = self.review_set.all()
+        up_votes = reviews.filter(value='up').count()
+        total_votes = reviews.count()
+
+        ratio = round(((up_votes / total_votes) * 100) / 10, 1)
+        self.vote_total = total_votes
+        self.vote_ratio = ratio
+
+        self.save()
 
 
 class Category(models.Model):
@@ -128,3 +156,24 @@ class Rating(models.Model):
     class Meta:
         verbose_name = "Рейтинг"
         verbose_name_plural = "Рейтинги"
+
+
+class Review(models.Model):
+    VOTE_TYPE = (
+        ('up', 'Положительная оценка'),
+        ('down', 'Отрицательная оценка')
+    )
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    body = models.TextField(null=True, blank=True)
+    value = models.CharField(max_length=200, choices=VOTE_TYPE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.value
+
+    class Meta:
+        unique_together = [['owner', 'movie']]
+        ordering = ["-created"]
+        verbose_name = "Отзыв и оценка"
+        verbose_name_plural = "Отзыв и оценка"

@@ -5,10 +5,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
-
-menu = [
-    {'title': 'Главная', 'url_name': 'home'},
-]
+from django.core.paginator import EmptyPage
+from home.utils import paginate_movies
+from .utils import user_movies
+from home.models import Movie
 
 
 def login_user(request):
@@ -30,8 +30,7 @@ def login_user(request):
             return redirect('home')
         else:
             messages.error(request, "Имя пользователя или пароль неверны")
-    contex = {'menu': menu}
-    return render(request, 'users/login_registr.html', contex)
+    return render(request, 'users/login_registr.html')
 
 
 def logout_user(request):
@@ -56,11 +55,35 @@ def registration(request):
         else:
             messages.error(request, 'При регистрации произошла ошибка')
 
-    contex = {'page': page, 'menu': menu, 'form': form}
+    contex = {'page': page, 'form': form}
     return render(request, 'users/login_registr.html', contex)
 
 
 @login_required(login_url='login')
 def added(request):
-    contex = {'menu': menu}
+    movies = user_movies(request)
+    last_added = Movie.objects.order_by('-pk')[:5]
+    try:
+        custom_range, movies = paginate_movies(request, movies, 6)
+    except EmptyPage:
+        return render(request, 'users/added.html', {'error': 'Ничего не добавлено', 'last_added': last_added})
+    contex = {'movies': movies,
+              'last_added': last_added,
+              'custom_range': custom_range
+              }
     return render(request, 'users/added.html', contex)
+
+
+def add_movie(request, slug):
+    movie_single = Movie.objects.get(url=slug)
+    if request.method == "POST":
+        movie_single.adding_movie.add(request.user.id)
+        movie_single.save()
+        return redirect(movie_single.get_absolute_url())
+
+
+def deleting_added(request, slug):
+    movie_single = Movie.objects.get(url=slug)
+    if request.method == "POST":
+        movie_single.adding_movie.remove(request.user.id)
+        return redirect(movie_single.get_absolute_url())

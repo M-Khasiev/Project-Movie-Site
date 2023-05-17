@@ -1,18 +1,21 @@
 {% extends 'home/base2.html' %}
 
 {% block base2 %}
-
+{% if error %}
+<h1 style="margin-left: 400px; margin-top: 300px;">{{ error }}</h1>
+{% endif %}
 <div class="left-ads-display col-lg-9">
     <div class="row">
         {% for movie in movies %}
         <div class="col-md-4 product-men">
             <div class="product-shoe-info editContent text-center mt-lg-4">
                 <div class="men-thumb-item">
-                    <a href="{{ movie.get_absolute_url }}"><img src="{{ movie.poster.url }}" class="img-fluid" alt=""></a>
+                    <a href="{{ movie.get_absolute_url }}"><img src="{{ movie.poster.url }}" class="img-fluid"
+                                                                alt=""></a>
                 </div>
                 <div class="item-info-product">
                     <h4 class="">
-                        <a href="{{ movie.get_absolute_url }}" class="editContent">{{ movie.title }}</a>
+                        <a href="{{ movie.get_absolute_url }}" class="editContent">{{ movie.title }} ({{ movie.year }})</a>
                     </h4>
 
                     <div class="product_price">
@@ -20,16 +23,33 @@
                             <span class="money editContent">«{{ movie.tagline }}»</span>
                         </div>
                     </div>
-                    <ul class="stars">
-                        <li><a href="#"><span class="fa fa-star" aria-hidden="true"></span></a></li>
-                        <li><a href="#"><span class="fa fa-star" aria-hidden="true"></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true"></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true"></span></a></li>
-                        <li><a href="#"><span class="fa fa-star-o" aria-hidden="true"></span></a></li>
+                    <ul>
+                        <li style="list-style: none">
+                    {% if movie.vote_ratio >= 7 %}
+                        <a href="#" style="color: green"><b>Рейтинг:</b>
+                            <span class="editContent"
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                        </a>
+                    {% elif movie.vote_ratio < 7 and movie.vote_ratio >= 5 %}
+                        <a href="#" style="color: grey"><b>Рейтинг:</b>
+                            <span class="editContent"
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                        </a>
+                    {% elif movie.vote_ratio < 5 and movie.vote_ratio >= 0 %}
+                        <a href="#" style="color: red"><b>Рейтинг:</b>
+                            <span class="editContent"
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                        </a>
+                    {% endif %}
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
         {% endfor %}
+
+        {% include 'home/pagination.html' with queryset=movies custom_range=custom_range %}
+    </div>
+</div>
 
         {% endblock base2 %}
