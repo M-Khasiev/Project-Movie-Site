@@ -1,18 +1,18 @@
 {% if queryset.has_other_pages %}
         <div class="pagination">
             {% if queryset.has_previous %}
-                <a href="?page={{ queryset.previous_page_number }}" class="pages-link"
+                <a href="?{{ year }}{{ genre }}{{ search }}page={{ queryset.previous_page_number }}" class="pages-link"
                    data-page="{{ queryset.previous_page_number }}">«</a>
             {% endif %}
             {% for page in custom_range %}
                 {% if page == queryset.number %}
-                    <a href="?page={{ page }}" class="pages-link active-btn" data-page="{{ page }}">{{ page }}</a>
+                    <a href="?{{ year }}{{ genre }}{{ search }}page={{ page }}" class="pages-link active-btn" data-page="{{ page }}">{{ page }}</a>
                 {% else %}
-                    <a href="?page={{ page }}" class="pages-link" data-page="{{ page }}">{{ page }}</a>
+                    <a href="?{{ year }}{{ genre }}{{ search }}page={{ page }}" class="pages-link" data-page="{{ page }}">{{ page }}</a>
                 {% endif %}
             {% endfor %}
             {% if queryset.has_next %}
-                <a href="?page={{ queryset.next_page_number }}" class="pages-link"
+                <a href="?{{ year }}{{ genre }}{{ search }}page={{ queryset.next_page_number }}" class="pages-link"
                    data-page="{{ queryset.next_page_number }}">»</a>
             {% endif %}
         </div>

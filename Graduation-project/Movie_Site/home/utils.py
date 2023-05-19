@@ -21,7 +21,6 @@ def search_movies(request):
 
 
 def paginate_movies(request, movies, results):
-
     page = request.GET.get('page', 1)
     # results = 6
     paginator = Paginator(movies, results, allow_empty_first_page=False)
@@ -64,12 +63,19 @@ def selection_data_genres(request):
                 movie_list.append(i)
 
     if request.GET.get('Horror'):
-        horror = Movie.objects.filter(genres__name__icontains='Ужасы'),
+        horror = Movie.objects.filter(genres__name__icontains='Ужасы')
         for i in horror:
             if i not in movie_list:
                 movie_list.append(i)
 
-    return movie_list
+    url_checkbox_genre = list()
+
+    for i in request.GET:
+        url_checkbox_genre.append(i)
+
+    url_checkbox_genre = ''.join([f"{x}=on&" for x in url_checkbox_genre]).replace('page=on&', '')
+
+    return movie_list, url_checkbox_genre
 
 
 def selection_data_year(request):
@@ -120,4 +126,11 @@ def selection_data_year(request):
                 if i not in movie_list:
                     movie_list.append(i)
 
-    return movie_list
+    url_checkbox_year = list()
+
+    for i in request.GET:
+        url_checkbox_year.append(i)
+
+    url_checkbox_year = ''.join([f"{x}=on&" for x in url_checkbox_year]).replace('page=on&', '').replace('/', '%2F')
+
+    return movie_list, url_checkbox_year

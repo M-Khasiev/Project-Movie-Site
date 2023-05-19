@@ -4,22 +4,53 @@ from .models import Movie, Actor
 from .utils import search_movies, paginate_movies, selection_data_genres, selection_data_year
 from .forms import ReviewForm
 from django.core.paginator import EmptyPage
+from django.db.models import Q
 
 
 def home(request):
-    movies, search_query = search_movies(request)
+    # movies, search_query = search_movies(request)
+    movies = Movie.objects.all()
     last_added = Movie.objects.order_by('-pk')[:5]
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {
         'movies': movies,
         'last_added': last_added,
-        'search_query': search_query,
-        # 'paginator': paginator,
         'custom_range': custom_range
     }
+    # context = {
+    #     'movies': movies,
+    #     'last_added': last_added,
+    #     'search_query': search_query,
+    #     # 'paginator': paginator,
+    #     'custom_range': custom_range
+    # }
+    return render(request, 'home/index.html', context)
+
+
+def search_movie(request):
+    search_query = ''
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+        print(search_query)
+    url_search_query = f"search_query={request.GET.get('search_query')}&"
+    movies = Movie.objects.distinct().filter(Q(title__iregex=search_query) |
+                                             Q(directors__name__iregex=search_query) |
+                                             Q(actors__name__iregex=search_query))
+
+    last_added = Movie.objects.order_by('-pk')[:5]
+
+    try:
+        custom_range, movies = paginate_movies(request, movies, 6)
+    except EmptyPage:
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
+    context = {'movies': movies,
+               'last_added': last_added,
+               'custom_range': custom_range,
+               'search': url_search_query
+               }
     return render(request, 'home/index.html', context)
 
 
@@ -54,7 +85,7 @@ def category_movies(request):
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': movies,
                'last_added': last_added,
                'custom_range': custom_range
@@ -68,7 +99,7 @@ def category_series(request):
     try:
         custom_range, series = paginate_movies(request, series, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': series,
                'last_added': last_added,
                'custom_range': custom_range
@@ -82,7 +113,7 @@ def category_cartoon(request):
     try:
         custom_range, cartoon = paginate_movies(request, cartoon, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': cartoon,
                'last_added': last_added,
                'custom_range': custom_range
@@ -100,7 +131,7 @@ def rating_movies_red(request):
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': movies,
                'last_added': last_added,
                'custom_range': custom_range
@@ -118,7 +149,7 @@ def rating_movies_grey(request):
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': movies,
                'last_added': last_added,
                'custom_range': custom_range
@@ -136,7 +167,7 @@ def rating_movies_green(request):
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': movies,
                'last_added': last_added,
                'custom_range': custom_range
@@ -145,21 +176,7 @@ def rating_movies_green(request):
 
 
 def checkbox_search_genre(request):
-    movies = selection_data_genres(request)
-    last_added = Movie.objects.order_by('-pk')[:5]
-    try:
-        custom_range, movies = paginate_movies(request, movies, 6)
-    except EmptyPage:
-        return render(request, 'home/index.html', {'error': 'Ничего не найдено'})
-    context = {'movies': movies,
-               'last_added': last_added,
-               'custom_range': custom_range
-               }
-    return render(request, 'home/index.html', context)
-
-
-def checkbox_search_year(request):
-    movies = selection_data_year(request)
+    movies, genre = selection_data_genres(request)
     last_added = Movie.objects.order_by('-pk')[:5]
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
@@ -167,7 +184,23 @@ def checkbox_search_year(request):
         return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
     context = {'movies': movies,
                'last_added': last_added,
-               'custom_range': custom_range
+               'custom_range': custom_range,
+               'genre': genre
+               }
+    return render(request, 'home/index.html', context)
+
+
+def checkbox_search_year(request):
+    movies, year = selection_data_year(request)
+    last_added = Movie.objects.order_by('-pk')[:5]
+    try:
+        custom_range, movies = paginate_movies(request, movies, 6)
+    except EmptyPage:
+        return render(request, 'home/index.html', {'error': 'Ничего не найдено', 'last_added': last_added})
+    context = {'movies': movies,
+               'last_added': last_added,
+               'custom_range': custom_range,
+               'year': year
                }
     return render(request, 'home/index.html', context)
 
