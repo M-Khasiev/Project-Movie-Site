@@ -34,6 +34,8 @@ class Movie(models.Model):
     url_trailer = models.CharField(max_length=1000, default='')
     created = models.DateTimeField(auto_now_add=True)
     adding_movie = models.ManyToManyField(User, default=None)
+    kinopoisk_url = models.URLField('Кинопоиск', default='')
+    imdb_url = models.URLField('IMDb', default='')
 
     def __str__(self):
         return self.title
@@ -177,3 +179,16 @@ class Review(models.Model):
         ordering = ["-created"]
         verbose_name = "Отзыв и оценка"
         verbose_name_plural = "Отзыв и оценка"
+
+
+class FactsMovie(models.Model):
+    title = models.CharField("Заголовок", max_length=100)
+    description = models.TextField("Описание")
+    movie = models.ForeignKey(Movie, verbose_name="Фильм", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Факты о фильме"
+        verbose_name_plural = "Факты о фильме"

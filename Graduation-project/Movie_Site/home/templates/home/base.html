@@ -27,8 +27,8 @@
 <body>
 
 <div id="page" class="page"><!-- mian-content -->
-    <div class="main-banner bg bg1" id="home"
-         style="background-color: rgba(0, 0, 0, 0); margin-top: 0px; background-image: {% static 'images/Batman2.jpg' %}">
+    <div class="main-banner inner bg bg1" id="home"
+         style="background-color: rgba(0, 0, 0, 0); margin-top: 0px; background-image: {% static 'images/Batman3.jpg' %}">
         <!-- header -->
         <header class="header">
             <div class="container-fluid px-lg-5">
@@ -36,7 +36,8 @@
                 <nav class="py-4">
                     <div id="logo">
                         <h1><a href="{% url 'home' %}" class="editContent"
-                               style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;">Movie-Site</a>
+                               style="outline: none; outline-offset: -2px; cursor: pointer; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;"><img
+                                src="{% static 'images/Movie-site_logo.jpg' %}" alt="" style="width: 45px; height: 45px; filter: brightness(3); margin-right: 10px; margin-bottom: 20px;">Movie-Site</a>
                         </h1>
                     </div>
 
@@ -44,6 +45,7 @@
                     <input type="checkbox" id="drop">
                     <ul class="menu mt-2">
                         <li><a href="{% url 'home' %}">Главная</a></li>
+                        <li><a href="{% url 'news' %}">Новости</a></li>
                         <li>
                             <!-- First Tier Drop Down -->
                             <label for="drop-2" class="toggle">Категории <span class="fa fa-angle-down"
@@ -77,13 +79,13 @@
     </div>
 
     {% if messages %}
-    {% for message in messages %}
-    <div style="text-align: center">
-        <div>
-            <h2 style="font-weight: bold">{{ message }}</h2>
+        {% for message in messages %}
+        <div style="text-align: center; margin-top: 30px">
+            <div>
+                <h2 style="font-weight: bold">{{ message }}</h2>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
     {% endif %}
 
     {% block content %}

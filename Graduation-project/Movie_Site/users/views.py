@@ -53,7 +53,7 @@ def registration(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'При регистрации произошла ошибка')
+            messages.error(request, 'При регистрации произошла ошибка!')
 
     contex = {'page': page, 'form': form}
     return render(request, 'users/login_registr.html', contex)
@@ -79,6 +79,7 @@ def add_movie(request, slug):
     if request.method == "POST":
         movie_single.adding_movie.add(request.user.id)
         movie_single.save()
+        messages.success(request, f"Добавлен в 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
 
 
@@ -86,4 +87,5 @@ def deleting_added(request, slug):
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.remove(request.user.id)
+        messages.success(request, f"Удален из 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())

@@ -383,7 +383,7 @@ li > a:only-child:after {
 /*--/banner --*/
 
 .main-banner {
-    background: url(../images/Batman2.jpg)no-repeat center;
+    background: url(../images/Batman3.jpg)no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -394,7 +394,7 @@ li > a:only-child:after {
 }
 
 .main-banner.inner {
-    background: url(../images/banner.jpg)no-repeat center;
+    background: url(../images/Batman3.jpg)no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -1696,3 +1696,35 @@ a:hover{
   } 
 .button10:hover { background: #ff0000; }
 .button10:active { background: red; border: 2px solid; color: #fa6e6e;}
+
+.news{
+    border-radius: 5px;
+    border: #727377 solid 2px;
+    padding: 15px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    list-style: none;
+}
+
+.pagination_news {
+    display: inline-block;
+    margin-left: 27%;
+    margin-right: 27%;
+    margin-top: 35px;
+}
+
+.pagination_news a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination_news a:hover{
+    background-color: #ff4c4c;
+}
+
+.pagination_news .active-btn{
+    background-color: #fa0000;
+}

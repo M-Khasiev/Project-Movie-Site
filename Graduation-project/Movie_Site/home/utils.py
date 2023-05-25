@@ -134,3 +134,6 @@ def selection_data_year(request):
     url_checkbox_year = ''.join([f"{x}=on&" for x in url_checkbox_year]).replace('page=on&', '').replace('/', '%2F')
 
     return movie_list, url_checkbox_year
+
+
+

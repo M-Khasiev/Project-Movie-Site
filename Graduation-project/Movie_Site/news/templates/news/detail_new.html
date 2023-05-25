@@ -1,0 +1,15 @@
+{% extends 'home/base2.html' %}
+{% block base2 %}
+
+<div class="left-ads-display col-lg-8">
+    <div class="row sub-para-w3layouts mt-5">
+        {% if news.url_image %}
+        <img src="{{ news.url_image }}" alt="" style="width: 40%; height: auto;">
+        {% endif %}
+        <p class="editContent" style="margin-top: 60px; color: black;">{{ news.description }}</p>
+    </div>
+    {% include 'news/pagination_news.html' with queryset=news custom_range=custom_range %}
+    <hr>
+</div>
+
+{% endblock base2 %}

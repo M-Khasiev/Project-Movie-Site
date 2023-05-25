@@ -1,0 +1,17 @@
+{% extends 'home/base2.html' %}
+{% block base2 %}
+<div class="left-ads-display col-lg-8">
+    <div class="row sub-para-w3layouts mt-5">
+        <ul>
+        {% for new in news %}
+        <li class="editContent news" style="outline: none;"><a
+                href="{% url 'detail-new' new.id %}">{{ new.title }}</a><span style="padding-left: 10px">({{ new.time|date:'d.m.Y'  }})</span></li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% include 'news/pagination_news.html' with queryset=news custom_range=custom_range %}
+    <hr>
+</div>
+
+{% endblock base2 %}
+
