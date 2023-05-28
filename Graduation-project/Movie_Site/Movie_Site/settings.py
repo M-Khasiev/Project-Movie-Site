@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
     'news.apps.NewsConfig',
+    'captcha',
 ]
 
 MIDDLEWARE = [

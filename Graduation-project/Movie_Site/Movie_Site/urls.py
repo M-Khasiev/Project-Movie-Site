@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('user/', include('users.urls')),
     path('news/', include('news.urls')),
+    path('captcha', include('captcha.urls')),
 ]
 
 if settings.DEBUG:

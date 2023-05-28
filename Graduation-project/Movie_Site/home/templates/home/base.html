@@ -59,7 +59,7 @@
                             </ul>
                         </li>
                         {% if request.user.is_authenticated %}
-                        <span style="color: white">{{ user.username }}</span>
+                        <span style="color: white; font-weight: bold;">Пользователь: {{ user.username }}</span>
                         <li><a href="{% url 'added' %}"
                                style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Мои
                             фильмы</a></li>

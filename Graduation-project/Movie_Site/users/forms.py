@@ -1,8 +1,11 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField
 
 
 class CustomUserCreationForm(UserCreationForm):
+    captcha = CaptchaField(label='Введите текст с картинки')
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'password1', 'password2']

@@ -1564,11 +1564,12 @@ a.move-top span {
 
 .Myform{
     width:300px; /* ширина блока */
-    height: 250px; /* высота блока */
+    height: 265px; /* высота блока */
     background: #fff; /* фон блока */
     border-radius: 10px; /* закругленные углы блока */
     margin: 10% auto; /* отступ сверху и выравнивание по середине */
     box-shadow: 2px 2px 4px 0px #000000; /* тень блока */
+    border: solid 1px black;
 }
 .Myform h1, .Myform_2 h1{
     margin: 0; /* убираем отступы */
@@ -1584,6 +1585,7 @@ a.move-top span {
     padding:20px; /* отступы */
 }
 .log{
+    margin-bottom: 20px;
     border: 1px solid #dcdcdc; /* рамка */
     padding: 12px 10px; /* отступы текста */
     width: 260px; /* ширина */
@@ -1624,11 +1626,12 @@ a:hover{
 
 .Myform_2{
     width:400px; /* ширина блока */
-    height: 600px; /* высота блока */
+    height: 790px; /* высота блока */
     background: #fff; /* фон блока */
     border-radius: 10px; /* закругленные углы блока */
     margin: 10% auto; /* отступ сверху и выравнивание по середине */
     box-shadow: 2px 2px 4px 0px #000000; /* тень блока */
+    border: solid 1px black;
 }
 
  .container-fluid{
