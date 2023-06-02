@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Movie, Actor
+from .models import Movie, Actor, Review
 from .utils import search_movies, paginate_movies, selection_data_genres, selection_data_year
 from .forms import ReviewForm
 from django.core.paginator import EmptyPage
@@ -37,6 +37,7 @@ def search_movie(request):
         print(search_query)
     url_search_query = f"search_query={request.GET.get('search_query')}&"
     movies = Movie.objects.distinct().filter(Q(title__iregex=search_query) |
+                                             Q(eng_title__iregex=search_query) |
                                              Q(directors__name__iregex=search_query) |
                                              Q(actors__name__iregex=search_query))
 
@@ -61,15 +62,16 @@ def get_movie(request, slug):
 
     if request.method == 'POST':
         form = ReviewForm(request.POST)
-        review = form.save(commit=False)
-        review.movie = movie_single
-        review.owner = request.user
-        review.save()
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.movie = movie_single
+            review.owner = request.user
+            review.save()
 
-        movie_single.get_vote_count()
+            movie_single.get_vote_count()
 
-        messages.success(request, 'Ваш отзыв успешно отправлен!')
-        return redirect(movie_single.get_absolute_url())
+            messages.success(request, 'Ваш отзыв успешно отправлен!')
+            return redirect(movie_single.get_absolute_url())
 
     context = {
         'movie_single': movie_single,
@@ -214,3 +216,10 @@ def actor_detail(request, slug):
     }
     return render(request, 'home/actor.html', context)
 
+
+def review_delete(request, slug):
+    if request.method == "POST":
+        movie = Movie.objects.get(url=slug)
+        Review.objects.filter(movie_id=movie.id, owner_id=request.user.id).delete()
+        messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
+        return redirect(movie.get_absolute_url())

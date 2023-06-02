@@ -59,13 +59,9 @@
                             </ul>
                         </li>
                         {% if request.user.is_authenticated %}
-                        <span style="color: white; font-weight: bold;">Пользователь: {{ user.username }}</span>
-                        <li><a href="{% url 'added' %}"
-                               style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Мои
-                            фильмы</a></li>
-                        <li><a href="{% url 'logout' %}"
-                               style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Выйти</a>
-                        </li>
+                        <li><a href="{% url 'added' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Мои фильмы</a></li>
+                        <li><a href="{% url 'account-settings' %}" style="color: rgb(255, 255, 255); font-weight: bold; text-transform: uppercase;">Пользователь: {{ user.username }}</a></li>
+                        <li><a href="{% url 'logout' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Выйти</a></li>
                         {% else %}
                         <li><a href="{% url 'registration' %}"
                                style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Войти/Зарегистрироваться</a>
@@ -93,7 +89,10 @@
 
     {% endblock content %}
 
-
+    <script src="{% static 'js/scripts3.js' %}"></script>
+    <script src="{% static 'js/scripts4.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <!--    <script src="{% static 'js/scripts.js' %}"></script>-->
 <!--    <script src="{% static 'js/scripts2.js' %}"></script>-->
 

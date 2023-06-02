@@ -29,13 +29,23 @@ class Movie(models.Model):
     )
     url = models.SlugField(max_length=130, unique=True)
     draft = models.BooleanField("Черновик", default=False)
-    vote_total = models.IntegerField(default=0)
-    vote_ratio = models.FloatField(default=0)
+    vote_total = models.IntegerField('Общее количество оценок', default=0)
+    vote_ratio = models.FloatField('Соотношение оценок', default=0)
     url_trailer = models.CharField(max_length=1000, default='')
-    created = models.DateTimeField(auto_now_add=True)
-    adding_movie = models.ManyToManyField(User, default=None)
+    created = models.DateTimeField('Добавлен', auto_now_add=True)
+    adding_movie = models.ManyToManyField(User, default=None, verbose_name='Какие пользователи добавили фильм')
     kinopoisk_url = models.URLField('Кинопоиск', default='')
     imdb_url = models.URLField('IMDb', default='')
+    eng_title = models.CharField("Название на английском", max_length=100, default='')
+    age_rating_movie = (
+        (0, '0+'),
+        (6, '6+'),
+        (12, '12+'),
+        (16, '16+'),
+        (18, '18+'),
+    )
+    age_rating = models.IntegerField('Возрастной рейтинг', default=0, choices=age_rating_movie)
+    movie_duration = models.IntegerField('Продолжительность фильма', default=0, help_text='Указывать в минутах')
 
     def __str__(self):
         return self.title
@@ -48,6 +58,9 @@ class Movie(models.Model):
 
     def get_absolute_url_deleting_added(self):
         return reverse('deleting-added', kwargs={'slug': self.url})
+
+    def get_absolute_url_deleting_review(self):
+        return reverse('review-delete', kwargs={'slug': self.url})
 
     def written_by(self):
         return [str(p) for p in self.adding_movie.all()]
@@ -125,6 +138,7 @@ class MovieShots(models.Model):
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="movie_shots/%Y/%m/%d/")
     movie = models.ForeignKey(Movie, verbose_name="Фильм", on_delete=models.CASCADE)
+    cms_css = models.CharField(max_length=200, null=True, default='-', verbose_name='CSS класс')
 
     def __str__(self):
         return self.title
@@ -165,11 +179,11 @@ class Review(models.Model):
         ('up', 'Положительная оценка'),
         ('down', 'Отрицательная оценка')
     )
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    body = models.TextField(null=True, blank=True)
-    value = models.CharField(max_length=200, choices=VOTE_TYPE)
-    created = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='Фильм')
+    body = models.TextField(null=True, blank=True, verbose_name='Отзыв')
+    value = models.CharField(max_length=200, choices=VOTE_TYPE, verbose_name='Оценка')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
 
     def __str__(self):
         return self.value

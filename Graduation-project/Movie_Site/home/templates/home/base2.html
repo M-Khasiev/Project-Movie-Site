@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
 {% block content %}
 <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem;">
@@ -146,8 +147,10 @@
         <div class="row footer-top">
             <div class="col-lg-4 footer-grid_section_w3layouts">
                 <h2 class="logo-2 mb-lg-4 mb-3">
-                    <a href="index.html" class="editContent">
+                    <a href="{% url 'home' %}" class="editContent">
                                 <span class="fa" aria-hidden="true">
+                                    <img
+                                src="{% static 'images/Movie-site_logo.jpg' %}" alt="" style="width: 45px; height: 45px; filter: brightness(3); margin-bottom: 20px;">
                                     Movie-Site
                                 </span>
                     </a>

@@ -7,14 +7,14 @@
             <img src="{{ movie_single.poster.url }}" class="img-fluid" alt="">
         </div>
         <div class="desc1-right col-md-6 pl-lg-4">
-            <h3 class="editContent" style="outline: none; cursor: inherit;">
-                {{ movie_single.title }}</h3>
+            <h3 class="editContent" style="outline: none; cursor: inherit;">{{ movie_single.title }}</h3>
+            <p class="editContent"><b>{{ movie_single.eng_title }}  {{ movie_single.age_rating }}+</b></p>
             <h5 class="editContent"></h5>
             <ul>
                 <li style="list-style: none"><span><b>Год: </b> {{ movie_single.year }}</span></li>
                 <li style="list-style: none"><span><b>Страна: </b> {{ movie_single.country }}</span>
                 </li>
-                <li style="list-style: none"><span><b>Слоган: </b> {{ movie_single.tagline }}</span>
+                <li style="list-style: none"><span><b>Слоган: </b> "{{ movie_single.tagline }}"</span>
                 </li>
                 <li style="list-style: none">
                     <span><b>Режиссер: </b>
@@ -24,8 +24,9 @@
                     </span></li>
                 <li style="list-style: none"><span><b>Актеры: </b>
                     {% for actor in movie_single.actors.all %}
-                            <a href="{{ actor.get_absolute_url }}">{{ actor.name }}</a>
+                            <a href="{{ actor.get_absolute_url }}">{{ actor.name }}{% if not forloop.last %}, {% else %} {% endif %}</a>
                     {% endfor %}
+                    и др.
                 </span></li>
                 <li style="list-style: none"><span><b>Жанр: </b>
                     {% for genre in movie_single.genres.all %}
@@ -35,12 +36,36 @@
                 </li>
                 <li style="list-style: none"><span><b>Премьера в мире: </b> {{ movie_single.world_premiere }}</span>
                 </li>
+                {% if movie_single.budget %}
                 <li style="list-style: none">
-                    <span><b>Бюджет: </b> ${{ movie_single.budget }}</span></li>
-                <li style="list-style: none">
-                    <span><b>Сборы в США: </b> ${{ movie_single.fees_in_usa }}</span></li>
-                <li style="list-style: none"><span><b>Сборы в мире: </b> ${{ movie_single.fess_in_world }}</span>
+                    <span><b>Бюджет: </b> ${{ movie_single.budget }}</span>
                 </li>
+                {% endif %}
+
+                {% if movie_single.fees_in_usa %}
+                <li style="list-style: none">
+                    <span><b>Сборы в США: </b> ${{ movie_single.fees_in_usa }}</span>
+                </li>
+                {% endif %}
+
+                {% if movie_single.fess_in_world %}
+                <li style="list-style: none">
+                    <span><b>Сборы в мире: </b> ${{ movie_single.fess_in_world }}</span>
+                </li>
+                {% endif %}
+
+                {% if movie_single.movie_duration %}
+                    {% if movie_single.category_id == 2 %}
+                    <li style="list-style: none">
+                            <span><b>Продолжительность одной серии: </b> {{ movie_single.movie_duration }} мин.</span>
+                    </li>
+                    {% else %}
+                        <li style="list-style: none">
+                            <span><b>Продолжительность: </b> {{ movie_single.movie_duration }} мин.</span>
+                        </li>
+                    {% endif %}
+                {% endif %}
+
                 <li style="list-style: none">
                     {% if movie_single.vote_ratio >= 7 %}
                         <a href="#" style="color: green"><b>Рейтинг:</b>
@@ -112,12 +137,30 @@
             О мультфильме {{ movie_single.title }}</h3>
         {% endif %}
 
-        <p>
-            {% for image in movie_single.movieshots_set.all %}
-                <img src="{{ image.image.url }}" class="img-movie-shots" alt="{{ image.description }}">
-            {% endfor %}
-        </p>
-        <p class="editContent" style="outline: none; cursor: inherit;">{{ movie_single.description|linebreaks }}</p>
+
+        <div style="width: 770px; position: absolute; padding-top: 80px;">
+  		<div id="carouselExampleCaptions" class="carousel slide container" data-ride="carousel">
+		  <div class="carousel-inner">
+			  {% for image in movie_single.movieshots_set.all %}
+		    	<div class="carousel-item {{ image.cms_css }}">
+		            <img class="myBtn d-block w-100" src="{{ image.image.url }}" alt="{{ image.description }}" style="max-height: 470px;">
+		        </div>
+			  {% endfor %}
+		  </div>
+
+		  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+	</div>
+
+
+        <p class="editContent" style="outline: none; cursor: inherit; margin-top: 550px;"><b>{{ movie_single.description|linebreaks }}</b></p>
         <p class="mt-3 italic-blue editContent"
            style="outline: none; cursor: inherit;">
             {% autoescape off %}
@@ -128,9 +171,9 @@
         <div style="margin-top: 100px">
             <h2>Знаете ли вы, что...</h2>
         {% for fact in movie_single.factsmovie_set.all %}
-            <p class="mt-3 editContent" style="outline: none; cursor: inherit;">
-                <b>{{ fact.id }}. {{ fact.description }}</b>
-            </p>
+            <ul class="mt-3 editContent" style="outline: none; cursor: inherit;">
+                <li><p class="mt-3 editContent"><b>{{ fact.description }}</b></p></li>
+            </ul>
             {% endfor %}
         </div>
         {% endif %}
@@ -179,6 +222,12 @@
                         <p class="mt-2 editContent" style="outline: none; cursor: inherit;">
                             {{ review.body|linebreaksbr }}
                         </p>
+                        {% if user.username == review.owner.username %}
+                        <form action="{{ movie_single.get_absolute_url_deleting_review }}" method="POST">
+                            {% csrf_token %}
+                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}

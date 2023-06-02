@@ -73,7 +73,7 @@ def added(request):
               }
     return render(request, 'users/added.html', contex)
 
-
+@login_required(login_url='login')
 def add_movie(request, slug):
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
@@ -82,10 +82,27 @@ def add_movie(request, slug):
         messages.success(request, f"Добавлен в 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
 
-
+@login_required(login_url='login')
 def deleting_added(request, slug):
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.remove(request.user.id)
         messages.success(request, f"Удален из 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
+
+
+@login_required(login_url='login')
+def account_settings(request):
+    last_added = Movie.objects.order_by('-pk')[:5]
+    contex = {'last_added': last_added}
+    return render(request, 'users/account_settings.html', contex)
+
+
+@login_required(login_url='login')
+def account_delete(request):
+    if request.method == "POST":
+        user = request.user.username
+        User.objects.filter(username=request.user.username).delete()
+        messages.success(request, f"Аккаунт '{user}' успешно удален!")
+        return redirect('home')
+

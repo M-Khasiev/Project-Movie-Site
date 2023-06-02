@@ -4,9 +4,9 @@
 <div class="left-ads-display col-lg-8">
     <div class="row sub-para-w3layouts mt-5">
         {% if news.url_image %}
-        <img src="{{ news.url_image }}" alt="" style="width: 40%; height: auto;">
+        <img src="{{ news.url_image }}" alt="" style="width: 40%; height: auto; margin: 0 auto; margin-bottom: 50px;">
         {% endif %}
-        <p class="editContent" style="margin-top: 60px; color: black;">{{ news.description }}</p>
+        <p class="mt-3 editContent"><b>{{ news.description }}</b></p>
     </div>
     {% include 'news/pagination_news.html' with queryset=news custom_range=custom_range %}
     <hr>
