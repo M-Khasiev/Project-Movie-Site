@@ -33,9 +33,12 @@ class Movie(models.Model):
     vote_ratio = models.FloatField('Соотношение оценок', default=0)
     url_trailer = models.CharField(max_length=1000, default='')
     created = models.DateTimeField('Добавлен', auto_now_add=True)
-    adding_movie = models.ManyToManyField(User, default=None, verbose_name='Какие пользователи добавили фильм')
+    adding_movie = models.ManyToManyField(User, default=None, blank=True,
+                                          verbose_name='Какие пользователи добавили фильм')
     kinopoisk_url = models.URLField('Кинопоиск', default='')
+    kinopoisk_rating = models.FloatField('Рэйтинг Кинопоиска', default=0)
     imdb_url = models.URLField('IMDb', default='')
+    imdb_rating = models.FloatField('Рэйтинг IMDb', default=0)
     eng_title = models.CharField("Название на английском", max_length=100, default='')
     age_rating_movie = (
         (0, '0+'),

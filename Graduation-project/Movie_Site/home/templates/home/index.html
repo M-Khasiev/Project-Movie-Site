@@ -1,4 +1,5 @@
 {% extends 'home/base2.html' %}
+{% load floattags %}
 
 {% block base2 %}
 {% if error %}
@@ -28,17 +29,17 @@
                     {% if movie.vote_ratio >= 7 %}
                         <a href="#" style="color: green"><b>Рейтинг:</b>
                             <span class="editContent"
-                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio|formatted_float }}</span>
                         </a>
                     {% elif movie.vote_ratio < 7 and movie.vote_ratio >= 5 %}
                         <a href="#" style="color: grey"><b>Рейтинг:</b>
                             <span class="editContent"
-                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio|formatted_float }}</span>
                         </a>
                     {% elif movie.vote_ratio < 5 and movie.vote_ratio >= 0 %}
                         <a href="#" style="color: red"><b>Рейтинг:</b>
                             <span class="editContent"
-                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio }}</span>
+                                  style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie.vote_ratio|formatted_float }}</span>
                         </a>
                     {% endif %}
                         </li>
