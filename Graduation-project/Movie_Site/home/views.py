@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Movie, Actor, Review
-from .utils import search_movies, paginate_movies, selection_data_genres, selection_data_year
+from .utils import search_movies, paginate_movies, selection_data_genres, selection_data_year, true_body
 from .forms import ReviewForm
 from django.core.paginator import EmptyPage
 from django.db.models import Q
@@ -57,6 +57,7 @@ def search_movie(request):
 
 def get_movie(request, slug):
     movie_single = Movie.objects.get(url=slug)
+    review_body_check = true_body(slug)
     last_added = Movie.objects.order_by('-pk')[:5]
     form = ReviewForm()
 
@@ -76,7 +77,8 @@ def get_movie(request, slug):
     context = {
         'movie_single': movie_single,
         'last_added': last_added,
-        'form': form
+        'form': form,
+        'review_body_check': review_body_check
     }
     return render(request, 'home/moviesingle.html', context)
 
@@ -215,11 +217,3 @@ def actor_detail(request, slug):
         'last_added': last_added,
     }
     return render(request, 'home/actor.html', context)
-
-
-def review_delete(request, slug):
-    if request.method == "POST":
-        movie = Movie.objects.get(url=slug)
-        Review.objects.filter(movie_id=movie.id, owner_id=request.user.id).delete()
-        messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
-        return redirect(movie.get_absolute_url())

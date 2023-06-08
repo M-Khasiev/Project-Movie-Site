@@ -14,5 +14,4 @@ urlpatterns = [
     path('search-movie/', views.search_movie, name='search-movie'),
     path('actor/<str:slug>/', views.actor_detail, name='actor_detail'),
     path('movie/<slug:slug>/', views.get_movie, name='get-movie'),
-    path('review-delete/<slug:slug>/', views.review_delete, name='review-delete'),
 ]

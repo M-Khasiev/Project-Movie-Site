@@ -1,4 +1,4 @@
-from .models import Movie
+from .models import Movie, Review
 from django.db.models import Q
 from django.core.paginator import Paginator
 
@@ -136,4 +136,10 @@ def selection_data_year(request):
     return movie_list, url_checkbox_year
 
 
-
+def true_body(slug):
+    movie_single = Movie.objects.get(url=slug)
+    res = 0
+    for review in movie_single.review_set.all():
+        if review.body:
+            res += 1
+    return res

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Movie, Actor, Category, Genre, MovieShots, RatingStar, Rating, Review, FactsMovie
+from .models import Movie, Actor, Category, Genre, MovieShots, Review, FactsMovie
 
 
 class ReviewInline(admin.TabularInline):
@@ -12,7 +12,7 @@ class ReviewInline(admin.TabularInline):
 
 
 class MovieShotsInline(admin.TabularInline):
-    """Отзывы на странице фильма"""
+    """Кадры на странице фильма"""
     model = MovieShots
     extra = 1
     readonly_fields = ("get_image",)
@@ -74,12 +74,14 @@ class MovieShotsAdmin(admin.ModelAdmin):
 
 
 class FactsMovieAdmin(admin.ModelAdmin):
+    """Факты о фильме"""
     list_display = ("movie", "description")
     list_display_links = ("movie",)
     search_fields = ("movie__title", "movie__eng_title")
 
 
 class ReviewAdmin(admin.ModelAdmin):
+    """Отзыв и оценка"""
     list_display = ("owner", "value", "movie")
     list_display_links = ("owner", "value")
     search_fields = ("owner__username", "value", "movie__title", "movie__eng_title")
@@ -90,7 +92,5 @@ admin.site.register(Actor, ActorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(MovieShots, MovieShotsAdmin)
-admin.site.register(Rating)
-admin.site.register(RatingStar)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(FactsMovie, FactsMovieAdmin)

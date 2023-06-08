@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage
 from home.utils import paginate_movies
 from .utils import user_movies
-from home.models import Movie
+from home.models import Movie, Review
 
 
 def login_user(request):
@@ -73,6 +73,7 @@ def added(request):
               }
     return render(request, 'users/added.html', contex)
 
+
 @login_required(login_url='login')
 def add_movie(request, slug):
     movie_single = Movie.objects.get(url=slug)
@@ -81,6 +82,7 @@ def add_movie(request, slug):
         movie_single.save()
         messages.success(request, f"Добавлен в 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
+
 
 @login_required(login_url='login')
 def deleting_added(request, slug):
@@ -94,7 +96,10 @@ def deleting_added(request, slug):
 @login_required(login_url='login')
 def account_settings(request):
     last_added = Movie.objects.order_by('-pk')[:5]
-    contex = {'last_added': last_added}
+    review = Review.objects.all()
+    contex = {'last_added': last_added,
+              'review': review
+              }
     return render(request, 'users/account_settings.html', contex)
 
 
@@ -106,3 +111,11 @@ def account_delete(request):
         messages.success(request, f"Аккаунт '{user}' успешно удален!")
         return redirect('home')
 
+
+@login_required(login_url='login')
+def review_delete(request, slug):
+    if request.method == "POST":
+        movie = Movie.objects.get(url=slug)
+        Review.objects.filter(movie_id=movie.id, owner_id=request.user.id).delete()
+        messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
+        return redirect('account-settings')

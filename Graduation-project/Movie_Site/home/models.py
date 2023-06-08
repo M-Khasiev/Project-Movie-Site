@@ -28,7 +28,6 @@ class Movie(models.Model):
         'Category', verbose_name="Категория", on_delete=models.SET_NULL, null=True
     )
     url = models.SlugField(max_length=130, unique=True)
-    draft = models.BooleanField("Черновик", default=False)
     vote_total = models.IntegerField('Общее количество оценок', default=0)
     vote_ratio = models.FloatField('Соотношение оценок', default=0)
     url_trailer = models.CharField(max_length=1000, default='')
@@ -36,9 +35,9 @@ class Movie(models.Model):
     adding_movie = models.ManyToManyField(User, default=None, blank=True,
                                           verbose_name='Какие пользователи добавили фильм')
     kinopoisk_url = models.URLField('Кинопоиск', default='')
-    kinopoisk_rating = models.FloatField('Рэйтинг Кинопоиска', default=0)
+    kinopoisk_rating = models.FloatField('Рейтинг Кинопоиска', default=0)
     imdb_url = models.URLField('IMDb', default='')
-    imdb_rating = models.FloatField('Рэйтинг IMDb', default=0)
+    imdb_rating = models.FloatField('Рейтинг IMDb', default=0)
     eng_title = models.CharField("Название на английском", max_length=100, default='')
     age_rating_movie = (
         (0, '0+'),
@@ -151,33 +150,8 @@ class MovieShots(models.Model):
         verbose_name_plural = "Кадры из фильма"
 
 
-class RatingStar(models.Model):
-    """Звезда рейтинга"""
-    value = models.SmallIntegerField("Значение", default=0)
-
-    def __str__(self):
-        return f'{self.value}'
-
-    class Meta:
-        verbose_name = "Звезда рейтинга"
-        verbose_name_plural = "Звезды рейтинга"
-        ordering = ["-value"]
-
-
-class Rating(models.Model):
-    """Рейтинг"""
-    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="фильм", related_name="ratings")
-
-    def __str__(self):
-        return f"{self.star} - {self.movie}"
-
-    class Meta:
-        verbose_name = "Рейтинг"
-        verbose_name_plural = "Рейтинги"
-
-
 class Review(models.Model):
+    """Отзыв и оценка"""
     VOTE_TYPE = (
         ('up', 'Положительная оценка'),
         ('down', 'Отрицательная оценка')
@@ -199,6 +173,7 @@ class Review(models.Model):
 
 
 class FactsMovie(models.Model):
+    """Факты о фильме"""
     title = models.CharField("Заголовок", max_length=100)
     description = models.TextField("Описание")
     movie = models.ForeignKey(Movie, verbose_name="Фильм", on_delete=models.CASCADE)

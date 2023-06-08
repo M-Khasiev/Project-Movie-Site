@@ -1,7 +1,8 @@
 {% extends 'home/base2.html' %}
 
 {% block base2 %}
-<div style="margin-top: 200px; width: 60%;">
+<div style="margin-top: 50px; width: 60%;">
+    <h2 style="margin-bottom: 30px;">Аккаунт:</h2>
     <ul class="hr">
         <li>
             <h2>Удаление аккаунта: {{ user.username }}</h2>
@@ -22,6 +23,23 @@
             </div>
         </li>
     </ul>
+    <hr>
+    <h2 style="margin-bottom: 30px;">Отзыв и оценка:</h2>
+    {% for review_account in review %}
+        {% if review_account.owner_id == user.id %}
+            <form action="{{ review_account.movie.get_absolute_url_deleting_review }}" method="POST" style="margin-bottom: 12px;">
+                {% csrf_token %}
+                <ul class="hr_2">
+                    <li>
+                        <h2><a href="{{ review_account.movie.get_absolute_url }}">{{ review_account.movie.title }}</a> {% if review_account.value == 'up' %}( Положительная оценка ) {% else %} ( Отрицательная оценка ) {% endif %}</h2>
+                    </li>
+                    <li>
+                        <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                    </li>
+                </ul>
+            </form>
+        {% endif %}
+    {% endfor %}
 </div>
 
 {% endblock base2 %}

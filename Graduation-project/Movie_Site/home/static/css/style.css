@@ -1688,7 +1688,7 @@ a:hover{
 } 
 
 .button10 {
-    display: inline-block;
+    display: inline-block !important;
     color: #000000;
     font-weight: 700;
     padding: .5em 2em;
@@ -1773,7 +1773,7 @@ a:hover{
     cursor: pointer;
   }
 
-  ul.hr {
+  ul.hr, ul.hr_2 {
     margin: 0; /* Обнуляем значение отступов */
     padding: 4px; /* Значение полей */
     display: flex;
@@ -1782,9 +1782,10 @@ a:hover{
     border-radius: 5px;
     padding: 20px;
    }
-   ul.hr li {
+   ul.hr li, ul.hr_2 li {
     display: inline-block; /* Отображать как строчный элемент */
     margin-right: 4px; /* Отступ слева */
     padding: 3px; /* Поля вокруг текста */
    }
+   
    
