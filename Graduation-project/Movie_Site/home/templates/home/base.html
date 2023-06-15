@@ -76,11 +76,11 @@
 
     {% if messages %}
         {% for message in messages %}
-        <div style="text-align: center; margin-top: 30px">
-            <div>
-                <h2 style="font-weight: bold">{{ message }}</h2>
+            <div class="message_{{ message.tags }}" style="text-align: center; margin-top: 30px;">
+                <div>
+                    <h2 class="message_text_{{ message.tags }}" style="font-weight: bold">{{ message }}</h2>
+                </div>
             </div>
-        </div>
         {% endfor %}
     {% endif %}
 

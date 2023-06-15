@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('user/', include('users.urls')),
     path('news/', include('news.urls')),
+    path('mailing_list/', include('mailing_list.urls')),
     path('captcha', include('captcha.urls')),
 ]
 

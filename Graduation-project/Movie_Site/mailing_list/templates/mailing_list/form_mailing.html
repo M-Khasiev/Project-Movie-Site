@@ -1,0 +1,14 @@
+<h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3">НОВОСТНАЯ РАССЫЛКА</h3>
+
+<p class="editContent">Подписавшись на нашу рассылку, вы всегда будете получать последние новости и обновления от
+    нас.</p>
+<form action="{% url 'email_save' %}" method="post" class="w3layouts-newsletter" style="display: flex; flex-flow: column wrap;">
+    {% csrf_token %}
+    <div style="width: 200px">
+        {{ mailing_form.captcha }}
+    </div>
+    <div>
+        {{ mailing_form.email }}
+    <button class="btn1 btn"><span class="fa fa-paper-plane-o" aria-hidden="true"></span></button></div>
+
+</form>

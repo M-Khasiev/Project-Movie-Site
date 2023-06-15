@@ -10,11 +10,13 @@ class Movie(models.Model):
     tagline = models.CharField("Слоган", max_length=100, default='')
     description = models.TextField("Описание")
     poster = models.ImageField("Постер", upload_to="movies/%Y/%m/%d/")
+    url_image = models.URLField('URL картинки для рассылки', default='', blank=True)
     year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
     country = models.CharField("Страна", max_length=30)
     directors = models.ManyToManyField('Actor', verbose_name="режиссер", related_name="film_director")
     actors = models.ManyToManyField('Actor', verbose_name="актеры", related_name="film_actor")
     genres = models.ManyToManyField('Genre', verbose_name="жанры")
+    number_of_seasons = models.IntegerField('Количество сезонов (если добавляете сериал)', default=0, blank=True)
     world_premiere = models.DateField("Премьера в мире", default=date.today)
     budget = models.PositiveIntegerField("Бюджет", default=0,
                                          help_text="указывать сумму в долларах")
@@ -48,6 +50,7 @@ class Movie(models.Model):
     )
     age_rating = models.IntegerField('Возрастной рейтинг', default=0, choices=age_rating_movie)
     movie_duration = models.IntegerField('Продолжительность фильма', default=0, help_text='Указывать в минутах')
+    newsletter = models.BooleanField('Был отправлен как рассылка', default=False)
 
     def __str__(self):
         return self.title
@@ -105,7 +108,11 @@ class Category(models.Model):
 class Actor(models.Model):
     """Актеры и режиссеры"""
     name = models.CharField("Имя", max_length=100)
+    eng_name = models.CharField("Имя на английском", max_length=100, default='')
+    date_of_birth = models.DateField("Дата рождения", default=date.today)
+    country = models.CharField("Место рождения", max_length=100, blank=True)
     age = models.PositiveSmallIntegerField("Возраст", default=0)
+    height = models.FloatField("Рост", default=0)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="actors/%Y/%m/%d/")
 

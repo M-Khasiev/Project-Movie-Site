@@ -1,4 +1,5 @@
 {% extends 'home/base2.html' %}
+{% load floattags %}
 
 {% block base2 %}
 <div class="left-ads-display col-lg-8">
@@ -9,17 +10,21 @@
         <div class="desc1-right col-md-6 pl-lg-4">
             <ul>
                 <li style="list-style: none"><h2>{{ actor.name }}</h2></li>
+                <li style="list-style: none"><p class="editContent" style="font-size: 20px">{{ actor.eng_name }}</p></li>
+                <li style="list-style: none"><span><b>Дата рождения: </b> {{ actor.date_of_birth }}</span></li>
+                <li style="list-style: none"><span><b>Место рождения: </b> {% if actor.country %}{{ actor.country }}{% else %} - {% endif %}</span></li>
                 <li style="list-style: none"><span><b>Возраст: </b> {{ actor.age }} лет</span></li>
+                <li style="list-style: none"><span><b>Рост: </b> {% if actor.height %}{{ actor.height|formatted_float_2 }} м {% else %} - {% endif %}</span></li>
                 <li style="list-style: none">
                     <span><b>Режиссер: </b>
                         {% for movie in actor.film_director.all %}
-                            {{ movie.title }}
+                            <a href="{{ movie.get_absolute_url }}">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
                         {% endfor %}
                     </span></li>
                 <li style="list-style: none">
                     <span><b>Актер: </b>
                     {% for movie in actor.film_actor.all %}
-                            {{ movie.title }}
+                            <a href="{{ movie.get_absolute_url }}">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
                     {% endfor %}
                     </span>
                 </li>
@@ -27,7 +32,7 @@
         </div>
     </div>
     <div class="row sub-para-w3layouts mt-5">
-        <p class="editContent" style="outline: none; cursor: inherit;">{{ actor.description|linebreaks }}</p>
+        <p class="editContent" style="outline: none; cursor: inherit;"><b>{{ actor.description|linebreaks }}</b></p>
     </div>
 </div>
 

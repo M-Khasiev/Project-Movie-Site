@@ -6,6 +6,7 @@ class News(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     url_image = models.URLField('Путь к картинке', default='')
     description = models.TextField("Описание")
+    newsletter = models.BooleanField('Была отправлен как рассылка', default=False)
 
     class Meta:
         verbose_name = "Новости"

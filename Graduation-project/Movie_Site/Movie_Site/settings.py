@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'news.apps.NewsConfig',
     'captcha',
+    'mailing_list.apps.MailingListConfig',
 ]
 
 MIDDLEWARE = [

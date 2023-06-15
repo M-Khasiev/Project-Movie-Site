@@ -15,10 +15,11 @@
             <div class="info">
                 <a href="{% url 'login' %}">Авторизация</a>
             </div>
-            <input class="btn" type="submit" value="Зарегистрироваться"/>
+            <input class="btn_gray" type="submit" value="Зарегистрироваться"/>
         </form>
     </div>
 </div>
+<p style="text-align: center; font-weight: bold;">Внимание: имя пользователя в конечном результате будет изменено на нижний регистр!</p>
 
 {% else %}
 
@@ -32,7 +33,7 @@
             <div class="info">
                 <a href="{% url 'registration' %}">Регистрация</a>
             </div>
-            <input class="btn" type="submit" value="Войти">
+            <input class="btn_gray" type="submit" value="Войти">
         </form>
     </div>
 </div>

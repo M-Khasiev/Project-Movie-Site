@@ -27,6 +27,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.info(request, f"Вы вошли как '{request.user.username}'")
             return redirect('home')
         else:
             messages.error(request, "Имя пользователя или пароль неверны")
@@ -34,7 +35,9 @@ def login_user(request):
 
 
 def logout_user(request):
+    user = request.user.username
     logout(request)
+    messages.info(request, f"Вы вышли из аккаунта '{user}'")
     return redirect('login')
 
 
@@ -49,7 +52,7 @@ def registration(request):
             user.username = user.username.lower()
             user.save()
 
-            messages.success(request, 'Пользователь успешно создан!')
+            messages.success(request, f"Пользователь '{user.username}' успешно создан!")
             login(request, user)
             return redirect('home')
         else:
@@ -89,7 +92,7 @@ def deleting_added(request, slug):
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.remove(request.user.id)
-        messages.success(request, f"Удален из 'Мои фильмы'")
+        messages.error(request, f"Удален из 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
 
 

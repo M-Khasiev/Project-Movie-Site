@@ -23,12 +23,18 @@ class MovieShotsInline(admin.TabularInline):
     get_image.short_description = 'Изображение'
 
 
+class FactsMovieInline(admin.TabularInline):
+    """Факты о фильме"""
+    model = FactsMovie
+    extra = 1
+
+
 class MovieAdmin(admin.ModelAdmin):
     """Фильмы"""
     list_display = ("title", "category", "eng_title", "created", 'get_image')
     list_filter = ("category", "year")
     search_fields = ("title", "category__name", 'eng_title')
-    inlines = [MovieShotsInline, ReviewInline]
+    inlines = [MovieShotsInline, FactsMovieInline, ReviewInline]
     save_on_top = True
     readonly_fields = ("get_image",)
 
@@ -52,7 +58,7 @@ class GenreAdmin(admin.ModelAdmin):
 class ActorAdmin(admin.ModelAdmin):
     """Актеры"""
     list_display = ("name", "age", "get_image")
-    search_fields = ("name",)
+    search_fields = ("name", "eng_name")
     readonly_fields = ("get_image",)
 
     def get_image(self, obj):

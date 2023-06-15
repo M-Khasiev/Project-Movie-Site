@@ -1597,7 +1597,7 @@ a.move-top span {
     width: 260px; /* ширина */
     border-radius: 0px 0px 5px 5px; /* закругленные углы снизу */
 }
-.btn{
+.btn_gray{
     background: gray; /* фон */
     border-radius: 5px; /* закругленные углы */
     color: #fff; /* цвет текста */
@@ -1605,6 +1605,7 @@ a.move-top span {
     font-weight: bold; /* жирный текст */
     margin: 10px; /* отступы */
     padding: 12px 20px; /* оступы для текста */
+    border: 2px solid white;
 }
 
 .info{
@@ -1626,7 +1627,7 @@ a:hover{
 
 .Myform_2{
     width:400px; /* ширина блока */
-    height: 790px; /* высота блока */
+    height: 850px; /* высота блока */
     background: #fff; /* фон блока */
     border-radius: 10px; /* закругленные углы блока */
     margin: 10% auto; /* отступ сверху и выравнивание по середине */
@@ -1787,5 +1788,33 @@ a:hover{
     margin-right: 4px; /* Отступ слева */
     padding: 3px; /* Поля вокруг текста */
    }
+
+   .captcha{
+    margin-bottom: 10px;
+    width: 100px;
+   }
+
+   .message_error{
+    background-color: rgb(228, 208, 208);
+   }
    
+   .message_text_error{
+    color: red;
+   }
+
+   .message_success{
+    background-color: rgb(228, 250, 222);
+   }
    
+   .message_text_success{
+    color: rgb(2, 146, 2);
+   }
+   
+   .message_info{
+    background-color: rgb(228, 240, 248);
+   }
+   
+   .message_text_info{
+    color: #1e272e;
+   }
+
