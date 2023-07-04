@@ -12,6 +12,7 @@ from .utils import user_movies, is_there_review_movie, is_there_review_news, is_
 from home.models import Movie, Review
 from news.models import ReviewNews
 from forum.models import QuestionUser, ReviewQuestion
+from django.db.models import Q
 
 
 def login_user(request):
@@ -81,6 +82,30 @@ def added(request):
               'custom_range': custom_range
               }
     return render(request, 'users/added.html', contex)
+
+
+@login_required(login_url='login')
+def search_adding_movie(request):
+    """Поиск добавленных фильмов (по названию, английскому названию, по режиссёрам и актёрам) в разделе 'Мои фильмы'"""
+    movies = Movie.objects.filter(adding_movie=request.user.id)
+    search_query = ''
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+    url_search_query = f"search_query={search_query}&"
+    movies = movies.distinct().filter(Q(title__iregex=search_query) |
+                                      Q(eng_title__iregex=search_query) |
+                                      Q(directors__name__iregex=search_query) |
+                                      Q(actors__name__iregex=search_query))
+    try:
+        custom_range, movies = paginate_movies(request, movies, 6)
+    except EmptyPage:
+        return render(request, 'users/added.html', {'error': 'Ничего не найдено', 'last_added': last_added()})
+    context = {'movies': movies,
+               'last_added': last_added(),
+               'custom_range': custom_range,
+               'search': url_search_query
+               }
+    return render(request, 'users/added.html', context)
 
 
 @login_required(login_url='login')

@@ -24,6 +24,8 @@ urlpatterns = [
     path('news-review-delete/<int:pk>/', views.news_review_delete, name='news-review-delete'),
     # Удаление вопроса из форума
     path('forum-question-delete/<int:pk>/', views.forum_question_delete, name='forum-question-delete'),
+    # Поиск добавленных фильмов в разделе 'Мои фильмы'
+    path('search-adding-movie/', views.search_adding_movie, name='search-adding-movie'),
     # Удаление отзыва к вопросу на форуме
     path('forum-review-question-delete/<int:pk>/', views.forum_review_question_delete,
          name='forum-review-question-delete'),

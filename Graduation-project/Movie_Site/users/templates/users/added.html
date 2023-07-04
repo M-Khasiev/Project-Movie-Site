@@ -1,7 +1,13 @@
 {% extends 'home/base2.html' %}
+
 {% block base2 %}
 <div class="left-ads-display col-lg-9">
-    <h1 style="text-align:center; font-weight: bold;">Мои фильмы:</h1>
+    <h1 style="text-align:center; font-weight: bold; margin-bottom: 5px;">Мои фильмы:</h1>
+    <form id="search" action="{% url 'search-adding-movie' %}" method="get" class="d-flex editContent" style="width: 400px; margin: 0 auto;">
+            <input type="search" placeholder="Поиск добавленного фильма..." name="search_query" class="form-control"
+                   required="">
+            <button type="submit" class="btn1 btn"><span class="fa fa-search" aria-hidden="true"></span></button>
+    </form>
     <hr>
     {% if error %}
     <h1 style="margin-top: 250px; text-align:center;">{{ error }}</h1>

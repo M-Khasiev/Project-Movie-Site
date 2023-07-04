@@ -27,7 +27,7 @@ def search_movie(request):
     search_query = ''
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
-    url_search_query = f"search_query={request.GET.get('search_query')}&"
+    url_search_query = f"search_query={search_query}&"
     movies = Movie.objects.distinct().filter(Q(title__iregex=search_query) |
                                              Q(eng_title__iregex=search_query) |
                                              Q(directors__name__iregex=search_query) |
