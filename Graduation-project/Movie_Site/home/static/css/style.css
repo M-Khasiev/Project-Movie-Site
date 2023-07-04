@@ -382,26 +382,26 @@ li > a:only-child:after {
 
 /*--/banner --*/
 
-.main-banner {
-    background: url(../images/Batman3.jpg)no-repeat center;
+.main-banner.inner {
+    /* background: url(../images/1.jpg)no-repeat center; */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
     background-size: cover;
     position: relative;
-    min-height: 50em;
+    min-height: 18em;
 }
 
-.main-banner.inner {
-    background: url(../images/Batman3.jpg)no-repeat center;
+.main-banner.inner2 {
+    /* background: url(../images/2.jpg)no-repeat center; */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     -ms-background-size: cover;
     background-size: cover;
     position: relative;
-    min-height: 20em;
+    min-height: 18em;
 }
 
 /*-- place holder --*/
@@ -1641,8 +1641,8 @@ a:hover{
 
  .pagination {
     display: inline-block;
-    margin-left: 35%;
-    margin-right: 35%;
+    margin-left: 40%;
+    margin-right: 30%;
     margin-top: 35px;
     
 }
@@ -1702,8 +1702,9 @@ a:hover{
 .button10:active { background: red; border: 2px solid; color: #fa6e6e;}
 
 .news{
-    border-radius: 5px;
-    border: #727377 solid 2px;
+    border-radius: 7px;
+    border: #1e272e solid 3px;
+    border-style: outset;
     padding: 15px;
     margin-bottom: 25px;
     margin-left: 20px;
@@ -1730,6 +1731,30 @@ a:hover{
 }
 
 .pagination_news .active-btn{
+    background-color: #fa0000;
+}
+
+
+.pagination_questions {
+    display: inline-block;
+    margin-left: 42%;
+    margin-right: 30%;
+    margin-top: 35px;
+}
+
+.pagination_questions a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination_questions a:hover{
+    background-color: #ff4c4c;
+}
+
+.pagination_questions .active-btn{
     background-color: #fa0000;
 }
 
@@ -1818,3 +1843,35 @@ a:hover{
     color: #1e272e;
    }
 
+   .questions_ul{
+    text-align: center;
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 4px; /* Значение полей */
+   }
+   .questions_ul li{
+    display : inline-block;
+    width: 500px;
+    border-radius: 7px;
+    border: #1e272e solid 3px;
+    border-style: outset;
+    padding: 15px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    list-style: none;
+   }
+
+   .questions_ul li a{
+    display: block; /* Ссылка как блочный элемент */
+    height: 100%; /* Высота на весь слой */
+   }
+
+   /* .questions{
+    width: 100%;
+    border-radius: 5px;
+    border: #727377 solid 2px;
+    padding: 15px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+    list-style: none;
+   }
+    */

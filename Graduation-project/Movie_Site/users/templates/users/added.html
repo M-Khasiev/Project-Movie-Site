@@ -1,9 +1,10 @@
 {% extends 'home/base2.html' %}
 {% block base2 %}
 <div class="left-ads-display col-lg-9">
-    <h1 style="margin-left: 400px">Мои фильмы:</h1>
+    <h1 style="text-align:center; font-weight: bold;">Мои фильмы:</h1>
+    <hr>
     {% if error %}
-    <h1 style="margin-top: 250px; margin-left: 350px">{{ error }}</h1>
+    <h1 style="margin-top: 250px; text-align:center;">{{ error }}</h1>
     {% endif %}
     <div class="row">
         {% for movie in movies %}

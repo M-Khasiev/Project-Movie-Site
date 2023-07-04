@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 
 
 def parser():
+    """Парсер для получения новостей"""
     url_image_new = ''
     description_new = ''
     res = 0
@@ -39,6 +40,7 @@ def parser():
 
 
 def paginate_news(request, news, results):
+    """Пагинация на странице с новостями"""
     page = request.GET.get('page', 1)
     # results = 6
     paginator = Paginator(news, results, allow_empty_first_page=False)
@@ -58,3 +60,13 @@ def paginate_news(request, news, results):
     custom_range = range(left_index, right_index)
 
     return custom_range, news
+
+
+def true_body_news(pk):
+    """Наличие отзывов"""
+    news_detail = News.objects.get(id=pk)
+    res = 0
+    for review in news_detail.reviewnews_set.all():
+        if review.body:
+            res += 1
+    return res

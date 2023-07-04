@@ -2,10 +2,11 @@
 {% load floattags %}
 
 {% block base2 %}
-{% if error %}
-<h1 style="margin-left: 400px; margin-top: 300px;">{{ error }}</h1>
-{% endif %}
+
 <div class="left-ads-display col-lg-9">
+    {% if error %}
+    <h1 style="text-align:center; margin-top: 300px;">{{ error }}</h1>
+    {% endif %}
     <div class="row">
         {% for movie in movies %}
         <div class="col-md-4 product-men">
@@ -53,4 +54,4 @@
     </div>
 </div>
 
-        {% endblock base2 %}
+{% endblock base2 %}

@@ -1,0 +1,41 @@
+{% extends 'home/base3.html' %}
+{% block content %}
+<div class="left-ads-display col-lg-8" style="margin: 0 auto; margin-top: 20px;">
+    <div class="search-bar w3layouts-newsletter">
+        <h3 class="sear-head editContent">Поиск вопроса</h3>
+        <form id="search" action="{% url 'search-question' %}" method="get" class="d-flex editContent">
+            <input type="search" placeholder="Введите вопрос..." name="search_query" class="form-control"
+                   required="">
+            <button type="submit" class="btn1 btn"><span class="fa fa-search" aria-hidden="true"></span></button>
+        </form>
+    </div>
+    <hr>
+    <p><a href="{% url 'forum' %}"> << К вопросам </a></p>
+    <div class="single-form-left">
+        <div class="contact-single">
+            <h3 class="editContent" style="outline: none; cursor: inherit;">
+                <span class="sub-tittle editContent"
+                      style="outline: none; cursor: inherit;"></span>Задать вопрос</h3>
+            <form action="{% url 'save-question' %}" method="POST" class="mt-4">
+                {% csrf_token %}
+
+                <div class="d-sm-flex">
+                    <div class="col-sm-6 form-group p-0 editContent"
+                         style="outline: none; cursor: inherit;">
+                        <label class="editContent"
+                               style="outline: none; cursor: inherit;"></label>
+                        {{ form.media }}
+                        {{ form.as_p }}
+                    </div>
+                </div>
+
+                <input type="submit"
+                       class="mt-3 btn_gray btn-success btn-block py-3"
+                       style="cursor: pointer; font-size: 20px;" value="Отправить">
+            </form>
+        </div>
+    </div>
+    <hr>
+</div>
+
+{% endblock content %}

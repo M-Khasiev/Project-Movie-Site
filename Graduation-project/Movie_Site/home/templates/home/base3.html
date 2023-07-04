@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+{% load static %}
+{% load mailing %}
+<html lang="ru">
+<head>
+    <!-- //Meta tag Keywords -->
+    <title>Movie-Site</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- //Meta tag Keywords -->
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Bootstrap-Core-CSS -->
+    <!--/ Style-CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <!--// Style-CSS -->
+    <!-- font-awesome-icons -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!-- //font-awesome-icons -->
+    <!-- /Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
+          rel="stylesheet">
+    <!-- //Fonts -->
+</head>
+
+<body>
+
+<div id="page" class="page" style="max-width: 1850px; margin: 0 auto;"><!-- mian-content -->
+    <div class="main-banner inner2 bg bg1" id="home"
+         style="background-color: rgba(0, 0, 0, 0); margin-top: 0px;">
+        <!-- header -->
+        <header class="header">
+            <div class="container-fluid px-lg-5">
+                <!-- nav -->
+                <nav class="py-4">
+                    <div id="logo">
+                        <h1><a href="{% url 'home' %}" class="editContent"
+                               style="outline: none; outline-offset: -2px; cursor: pointer; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;"><img
+                                src="{% static 'images/Movie-site_logo.jpg' %}" alt="" style="width: 45px; height: 45px; filter: brightness(3); margin-right: 10px; margin-bottom: 20px;">Movie-Site</a>
+                        </h1>
+                    </div>
+
+                    <label for="drop" class="toggle">Меню</label>
+                    <input type="checkbox" id="drop">
+                    <ul class="menu mt-2">
+                        <li><a href="{% url 'home' %}">Главная</a></li>
+                        <li><a href="{% url 'forum' %}">Форум</a></li>
+                        <li><a href="{% url 'news' %}">Новости кино</a></li>
+                        <li>
+                            <!-- First Tier Drop Down -->
+                            <label for="drop-2" class="toggle">Категории <span class="fa fa-angle-down"
+                                                                               aria-hidden="true"></span> </label>
+                            <a href="#">Категории <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+                            <input type="checkbox" id="drop-2">
+                            <ul>
+                                <li><a href="{% url 'category-movies' %}">Фильмы</a></li>
+                                <li><a href="{% url 'category-series' %}">Сериалы</a></li>
+                                <li><a href="{% url 'category-cartoon' %}">Мультфильмы</a></li>
+                            </ul>
+                        </li>
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'added' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Мои фильмы</a></li>
+                        <li><a href="{% url 'account-settings' %}" style="color: rgb(255, 255, 255); font-weight: bold; text-transform: uppercase;">Пользователь: {{ user.username }}</a></li>
+                        <li><a href="{% url 'logout' %}" style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Выйти</a></li>
+                        {% else %}
+                        <li><a href="{% url 'registration' %}"
+                               style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Войти/Зарегистрироваться</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <!-- //nav -->
+            </div>
+        </header>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message_{{ message.tags }}" style="text-align: center; margin-top: 30px;">
+                <div>
+                    <h2 class="message_text_{{ message.tags }}" style="font-weight: bold">{{ message }}</h2>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+
+
+    {% endblock content %}
+    <hr>
+    <footer class="editContent">
+    <div class="container">
+        <div class="row footer-top">
+            <div class="col-lg-4 footer-grid_section_w3layouts">
+                <h2 class="logo-2 mb-lg-4 mb-3">
+                    <a href="{% url 'home' %}" class="editContent">
+                                <span class="fa" aria-hidden="true">
+                                    <img
+                                src="{% static 'images/Movie-site_logo.jpg' %}" alt="" style="width: 45px; height: 45px; filter: brightness(3); margin-bottom: 20px;">
+                                    Movie-Site
+                                </span>
+                    </a>
+                </h2>
+                <p class="editContent">
+                    Все о кино и кинематографе.
+                </p>
+                <h4 class="sub-con-fo ad-info my-4 editContent">Catch on Social</h4>
+                <ul class="w3layouts_social_list media-soc list-unstyled">
+                    <li>
+                        <a href="#" class="w3pvt_facebook editContent">
+                            <span class="fa fa-facebook-f"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="w3pvt_twitter editContent">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="w3pvt_dribble editContent">
+                            <span class="fa fa-dribbble"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="w3pvt_google editContent">
+                            <span class="fa fa-google-plus"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-8 footer-right">
+                <div class="w3layouts-news-letter">
+                    {% mailing_form %}
+                </div>
+                <div class="row mt-lg-4 bottom-w3layouts-sec-nav mx-0">
+                    <div class="col-md-4 footer-grid_section_w3layouts">
+                        <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3">Разделы</h3>
+                        <ul class="list-unstyled w3layouts-icons">
+                            <li>
+                                <a href="{% url 'home' %}" class="editContent">Главная</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'news' %}" class="editContent">Новости</a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="{% url 'added' %}" class="editContent">Мои фильмы</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'account-settings' %}" class="editContent">Пользователь: {{ request.user.username }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'registration' %}" class="editContent">Войти/Зарегистрироваться</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-md-4 footer-grid_section_w3layouts">
+                        <!-- social icons -->
+                        <div class="agileinfo_social_icons">
+                            <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3">Информация о сайте</h3>
+                            <ul class="list-unstyled w3layouts-icons">
+                                <li>
+                                    <a href="#" class="editContent">О нас</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- social icons -->
+                    </div>
+                    <div class="col-md-4 footer-grid_section_w3layouts my-md-0 my-5">
+                        <h3 class="footer-title text-uppercase text-wh mb-lg-4 mb-3 editContent">Контактная информация</h3>
+                        <div class="contact-info">
+                            <div class="footer-address-inf my-4">
+                                <h4 class="ad-info mb-2 editContent">Email </h4>
+                                <p class="editContent"><a href="mailto:info@example.com">info@example.com</a></p>
+                            </div>
+                            <div class="footer-address-inf">
+                                <h4 class="ad-info mb-2 editContent">Расположение</h4>
+                                <p class="editContent">Москва</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- //footer -->
+<div class="cpy-right py-3">
+    <div class="container">
+        <div class="row">
+            <p class="col-md-10 text-left">© 2023 Movie-Site. All rights reserved</p>
+            <!-- move top icon -->
+            <a href="#home" class="move-top text-right col-md-2"><span class="fa fa-long-arrow-up"
+                                                                       aria-hidden="true"></span></a>
+            <!-- //move top icon -->
+        </div>
+    </div>
+</div>
+
+    <script src="{% static 'js/scripts3.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://test.vl-it.ru/media/twentytwenty/css/twentytwenty.css">
+    <script src="https://test.vl-it.ru/media/twentytwenty/js/jquery.event.move.js"></script>
+    <script src="https://test.vl-it.ru/media/twentytwenty/js/jquery.twentytwenty.js"></script>
+    <script src="{% static 'js/scripts5.js' %}"></script>
+    <script>
+        const backrounds = ["{% static 'images/1.jpg' %}", "{% static 'images/2.jpg' %}", "{% static 'images/3.jpg' %}",
+                            "{% static 'images/4.jpg' %}", "{% static 'images/5.jpg' %}", "{% static 'images/6.jpg' %}",
+                            "{% static 'images/7.jpg' %}", "{% static 'images/8.jpg' %}", "{% static 'images/9.jpg' %}",
+                            "{% static 'images/10.jpg' %}"];
+        const randomBackround = backrounds[Math.floor(Math.random() * backrounds.length)];
+        const mainBanner = document.querySelector(".inner2");
+        mainBanner.style.background = "url('" + randomBackround + "')";
+        mainBanner.style.backgroundRepeat = "no-repeat";
+        mainBanner.style.backgroundPosition = "center";
+        console.log(mainBanner);
+    </script>
+
+</body>
+</html>

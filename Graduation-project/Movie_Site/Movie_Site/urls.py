@@ -24,6 +24,8 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('news/', include('news.urls')),
     path('mailing_list/', include('mailing_list.urls')),
+    path('forum/', include('forum.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('captcha', include('captcha.urls')),
 ]
 

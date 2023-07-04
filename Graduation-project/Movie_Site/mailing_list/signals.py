@@ -6,13 +6,15 @@ from django.dispatch import receiver
 from news.models import News
 from .models import MailingList
 from home.models import Movie
+from secret_data import secret_email_sender, secret_password
 
 
 @receiver(post_save, sender=News, )
 def func_name(sender, instance, created, **kwargs):
+    """Рассылка новостей на почту"""
     if not News.objects.all().latest('time').newsletter:
-        email_sender = '2.mkhs.5@mail.ru'
-        password = ...
+        email_sender = secret_email_sender
+        password = secret_password
         email_getter = list()
         text = News.objects.all().latest('time')
 
@@ -23,7 +25,7 @@ def func_name(sender, instance, created, **kwargs):
         smtp_server.starttls()
 
         msg = MIMEMultipart()
-        msg["From"] = "Movie-Site <2.mkhs.5@mail.ru>"
+        msg["From"] = f"Movie-Site <{secret_email_sender}>"
         msg["Subject"] = "Обновились новости на сайте!"
         html = f"""
         <html>
@@ -43,9 +45,10 @@ def func_name(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Movie, )
 def func_name_2(sender, instance, created, **kwargs):
+    """Рассылка новых фильмов на почту"""
     if not Movie.objects.all().latest('created').newsletter:
-        email_sender = '2.mkhs.5@mail.ru'
-        password = ...
+        email_sender = secret_email_sender
+        password = secret_password
         email_getter = list()
         movie = Movie.objects.all().latest('created')
         cat = ''
@@ -63,7 +66,7 @@ def func_name_2(sender, instance, created, **kwargs):
         smtp_server.starttls()
 
         msg = MIMEMultipart()
-        msg["From"] = "Movie-Site <2.mkhs.5@mail.ru>"
+        msg["From"] = f"Movie-Site <{secret_email_sender}>"
         msg["Subject"] = f"На сайте появился новый {cat}!"
         html = f"""
             <html>

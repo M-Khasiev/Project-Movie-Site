@@ -1,26 +1,9 @@
-from .models import Movie, Review
-from django.db.models import Q
+from .models import Movie
 from django.core.paginator import Paginator
 
 
-def search_movies(request):
-    search_query = ''
-    if request.GET.get('search_query'):
-        search_query = request.GET.get('search_query')
-
-    # actors = Actor.objects.filter(name__icontains=search_query)
-    #
-    # Q(directors__in=actors) |
-    # Q(actors__in=actors))
-
-    movies = Movie.objects.distinct().filter(Q(title__iregex=search_query) |
-                                             Q(description__iregex=search_query) |
-                                             Q(directors__name__iregex=search_query) |
-                                             Q(actors__name__iregex=search_query))
-    return movies, search_query
-
-
 def paginate_movies(request, movies, results):
+    """Пагинация на страницах с фильмами"""
     page = request.GET.get('page', 1)
     # results = 6
     paginator = Paginator(movies, results, allow_empty_first_page=False)
@@ -43,6 +26,7 @@ def paginate_movies(request, movies, results):
 
 
 def selection_data_genres(request):
+    """Поиск по жанрам (отмеченные пользователем жанры)"""
     movie_list = list()
     if request.GET.get('Thriller'):
         thriller = Movie.objects.filter(genres__name__icontains='Триллер')
@@ -79,6 +63,7 @@ def selection_data_genres(request):
 
 
 def selection_data_year(request):
+    """Поиск по годам (отмеченные пользователем года)"""
     movie_list = list()
     if request.GET.get('2023'):
         year_2023 = Movie.objects.filter(year=2023)
@@ -137,9 +122,15 @@ def selection_data_year(request):
 
 
 def true_body(slug):
+    """Наличие отзывов"""
     movie_single = Movie.objects.get(url=slug)
     res = 0
     for review in movie_single.review_set.all():
         if review.body:
             res += 1
     return res
+
+
+def last_added():
+    """Последние 5 фильмов любой категории добавленных на сайт"""
+    return Movie.objects.order_by('-pk')[:5]

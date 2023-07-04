@@ -1,0 +1,19 @@
+{% if queryset.has_other_pages %}
+        <div class="pagination_questions">
+            {% if queryset.has_previous %}
+                <a href="?{{ year }}{{ genre }}{{ search }}page={{ queryset.previous_page_number }}" class="pages-link"
+                   data-page="{{ queryset.previous_page_number }}">«</a>
+            {% endif %}
+            {% for page in custom_range %}
+                {% if page == queryset.number %}
+                    <a href="?{{ year }}{{ genre }}{{ search }}page={{ page }}" class="pages-link active-btn" data-page="{{ page }}">{{ page }}</a>
+                {% else %}
+                    <a href="?{{ year }}{{ genre }}{{ search }}page={{ page }}" class="pages-link" data-page="{{ page }}">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if queryset.has_next %}
+                <a href="?{{ year }}{{ genre }}{{ search }}page={{ queryset.next_page_number }}" class="pages-link"
+                   data-page="{{ queryset.next_page_number }}">»</a>
+            {% endif %}
+        </div>
+{% endif %}

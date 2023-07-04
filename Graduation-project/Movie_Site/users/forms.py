@@ -4,6 +4,7 @@ from captcha.fields import CaptchaField
 
 
 class CustomUserCreationForm(UserCreationForm):
+    """Форма регистрации"""
     captcha = CaptchaField(label='Введите текст с картинки')
 
     class Meta:

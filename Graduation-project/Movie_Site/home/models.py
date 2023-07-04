@@ -174,7 +174,7 @@ class Review(models.Model):
 
     class Meta:
         unique_together = [['owner', 'movie']]
-        ordering = ["-created"]
+        ordering = ["created"]
         verbose_name = "Отзыв и оценка"
         verbose_name_plural = "Отзыв и оценка"
 

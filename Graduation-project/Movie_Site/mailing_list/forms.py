@@ -4,6 +4,7 @@ from .models import MailingList
 
 
 class MailingListForm(forms.ModelForm):
+    """Форма рассылки"""
     captcha = CaptchaField(label='')
 
     class Meta:

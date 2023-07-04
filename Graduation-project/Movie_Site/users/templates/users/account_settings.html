@@ -1,11 +1,11 @@
 {% extends 'home/base2.html' %}
 
 {% block base2 %}
-<div style="margin-top: 50px; width: 60%;">
-    <h2 style="margin-bottom: 30px;">Аккаунт:</h2>
+<div style="margin: 0 auto; margin-top: 37px;">
+    <h5 style="margin-bottom: 30px;">Аккаунт:</h5>
     <ul class="hr">
         <li>
-            <h2>Удаление аккаунта: {{ user.username }}</h2>
+            <h5 style="padding-top: 10px">Удаление аккаунта: {{ user.username }}</h5>
         </li>
         <li>
             <button id="myBtn" style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
@@ -24,22 +24,90 @@
         </li>
     </ul>
     <hr>
-    <h2 style="margin-bottom: 30px;">Отзыв и оценка:</h2>
-    {% for review_account in review %}
-        {% if review_account.owner_id == user.id %}
-            <form action="{{ review_account.movie.get_absolute_url_deleting_review }}" method="POST" style="margin-bottom: 12px;">
-                {% csrf_token %}
-                <ul class="hr_2">
-                    <li>
-                        <h2><a href="{{ review_account.movie.get_absolute_url }}">{{ review_account.movie.title }}</a> {% if review_account.value == 'up' %}( Положительная оценка ) {% else %} ( Отрицательная оценка ) {% endif %}</h2>
-                    </li>
-                    <li>
-                        <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
-                    </li>
-                </ul>
-            </form>
-        {% endif %}
-    {% endfor %}
+    <h5 style="margin-bottom: 30px;">Отзыв и оценка к фильму:</h5>
+    {% if availability %}
+        {% for review_account in review %}
+            {% if review_account.owner_id == user.id %}
+                <form action="{{ review_account.movie.get_absolute_url_deleting_review }}" method="POST" style="margin-bottom: 12px;">
+                    {% csrf_token %}
+                    <ul class="hr_2">
+                        <li>
+                            <h5 style="padding-top: 10px"><a href="{{ review_account.movie.get_absolute_url }}">{{ review_account.movie.title }}</a> {% if review_account.value == 'up' %}( Положительная оценка ) {% else %} ( Отрицательная оценка ) {% endif %}</h5>
+                        </li>
+                        <li>
+                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                        </li>
+                    </ul>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <h5>Вы не оставляли фильму отзыв и оценку.</h5>
+    {% endif %}
+    <hr>
+    <h5 style="margin-bottom: 30px;">Отзывы новостей:</h5>
+    {% if availability_news %}
+        {% for review_news_account in review_news %}
+            {% if review_news_account.owner_id == user.id %}
+                <form action="{% url 'news-review-delete' review_news_account.id %}" method="POST" style="margin-bottom: 12px;">
+                    {% csrf_token %}
+                    <ul class="hr_2">
+                        <li>
+                            <h5 style="padding-top: 10px"><a href="{% url 'detail-new' review_news_account.news.id %}">{{ review_news_account.news.title }}</a> ({{ review_news_account.body|truncatechars:20 }})</h5>
+                        </li>
+                        <li>
+                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                        </li>
+                    </ul>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <h5>Вы не оставляли отзыв.</h5>
+    {% endif %}
+    <hr>
+    <h5 style="margin-bottom: 30px;">Вопросы на форуме:</h5>
+    {% if availability_question %}
+        {% for question in forum_question %}
+            {% if question.user_id == user.id %}
+                <form action="{% url 'forum-question-delete' question.id %}" method="POST" style="margin-bottom: 12px;">
+                    {% csrf_token %}
+                    <ul class="hr_2">
+                        <li>
+                            <h5 style="padding-top: 10px"><a href="{% url 'detail-question' question.id %}">{{ question.subject|truncatechars:30 }}</a></h5>
+                        </li>
+                        <li>
+                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                        </li>
+                    </ul>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <h5>Вы не задавали вопросов на форуме.</h5>
+    {% endif %}
+    <hr>
+    <h5 style="margin-bottom: 30px;">Отзывы к вопросам на форуме:</h5>
+    {% if availability_question_review %}
+        {% for question_review in forum_question_review %}
+            {% if question_review.owner_id == user.id %}
+                <form action="{% url 'forum-review-question-delete' question_review.id %}" method="POST" style="margin-bottom: 12px;">
+                    {% csrf_token %}
+                    <ul class="hr_2">
+                        <li>
+                            <h5 style="padding-top: 10px"><a href="{% url 'detail-question' question_review.question_user_id %}">Вопрос - {{ question_review.question_user.subject|truncatechars:20 }} || Отзыв - {{ question_review.body|truncatechars:25 }}</a></h5>
+                        </li>
+                        <li>
+                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
+                        </li>
+                    </ul>
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <h5>Вы не оставляли отзывов к вопросам на форуме.</h5>
+    {% endif %}
+
 </div>
 
 {% endblock base2 %}

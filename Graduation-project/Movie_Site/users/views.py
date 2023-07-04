@@ -6,12 +6,16 @@ from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage
-from home.utils import paginate_movies
-from .utils import user_movies
+from home.utils import paginate_movies, last_added
+from .utils import user_movies, is_there_review_movie, is_there_review_news, is_there_questions, \
+    is_there_questions_review
 from home.models import Movie, Review
+from news.models import ReviewNews
+from forum.models import QuestionUser, ReviewQuestion
 
 
 def login_user(request):
+    """Авторизация пользователя"""
     if request.user.is_authenticated:
         return redirect('home')
 
@@ -35,6 +39,7 @@ def login_user(request):
 
 
 def logout_user(request):
+    """Выход из аккаунта"""
     user = request.user.username
     logout(request)
     messages.info(request, f"Вы вышли из аккаунта '{user}'")
@@ -42,6 +47,7 @@ def logout_user(request):
 
 
 def registration(request):
+    """Регистрация пользователя"""
     page = 'register'
     form = CustomUserCreationForm()
 
@@ -56,7 +62,7 @@ def registration(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'При регистрации произошла ошибка!')
+            messages.error(request, form.errors)
 
     contex = {'page': page, 'form': form}
     return render(request, 'users/login_registr.html', contex)
@@ -64,14 +70,14 @@ def registration(request):
 
 @login_required(login_url='login')
 def added(request):
+    """Добавленные фильмы в раздел 'Мои фильмы'"""
     movies = user_movies(request)
-    last_added = Movie.objects.order_by('-pk')[:5]
     try:
         custom_range, movies = paginate_movies(request, movies, 6)
     except EmptyPage:
-        return render(request, 'users/added.html', {'error': 'Ничего не добавлено', 'last_added': last_added})
+        return render(request, 'users/added.html', {'error': 'Ничего не добавлено', 'last_added': last_added()})
     contex = {'movies': movies,
-              'last_added': last_added,
+              'last_added': last_added(),
               'custom_range': custom_range
               }
     return render(request, 'users/added.html', contex)
@@ -79,6 +85,7 @@ def added(request):
 
 @login_required(login_url='login')
 def add_movie(request, slug):
+    """Добавление фильма в раздел 'Мои фильмы'"""
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.add(request.user.id)
@@ -89,6 +96,7 @@ def add_movie(request, slug):
 
 @login_required(login_url='login')
 def deleting_added(request, slug):
+    """Удаление фильма из раздела 'Мои фильмы'"""
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.remove(request.user.id)
@@ -98,16 +106,32 @@ def deleting_added(request, slug):
 
 @login_required(login_url='login')
 def account_settings(request):
-    last_added = Movie.objects.order_by('-pk')[:5]
+    """Настройки аккаунта"""
     review = Review.objects.all()
-    contex = {'last_added': last_added,
-              'review': review
+    review_news = ReviewNews.objects.all()
+    forum_question = QuestionUser.objects.all()
+    forum_question_review = ReviewQuestion.objects.all()
+    availability = is_there_review_movie(request)
+    availability_news = is_there_review_news(request)
+    availability_question = is_there_questions(request)
+    availability_question_review = is_there_questions_review(request)
+
+    contex = {'last_added': last_added(),
+              'review': review,
+              'review_news': review_news,
+              'forum_question': forum_question,
+              'forum_question_review': forum_question_review,
+              'availability': availability,
+              'availability_news': availability_news,
+              'availability_question': availability_question,
+              'availability_question_review': availability_question_review,
               }
     return render(request, 'users/account_settings.html', contex)
 
 
 @login_required(login_url='login')
 def account_delete(request):
+    """Удаление аккаунта"""
     if request.method == "POST":
         user = request.user.username
         User.objects.filter(username=request.user.username).delete()
@@ -117,8 +141,36 @@ def account_delete(request):
 
 @login_required(login_url='login')
 def review_delete(request, slug):
+    """Удаление отзыва к фильму"""
     if request.method == "POST":
         movie = Movie.objects.get(url=slug)
         Review.objects.filter(movie_id=movie.id, owner_id=request.user.id).delete()
+        messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
+        return redirect('account-settings')
+
+
+@login_required(login_url='login')
+def news_review_delete(request, pk):
+    """Удаление отзыва к новости"""
+    if request.method == "POST":
+        ReviewNews.objects.get(id=pk).delete()
+        messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
+        return redirect('account-settings')
+
+
+@login_required(login_url='login')
+def forum_question_delete(request, pk):
+    """Удаление вопроса из форума"""
+    if request.method == "POST":
+        QuestionUser.objects.get(id=pk).delete()
+        messages.success(request, f"Вопрос пользователя {request.user.username} успешно удален!")
+        return redirect('account-settings')
+
+
+@login_required(login_url='login')
+def forum_review_question_delete(request, pk):
+    """Удаление отзыва к вопросу на форуме"""
+    if request.method == "POST":
+        ReviewQuestion.objects.get(id=pk).delete()
         messages.success(request, f"Комментарии пользователя {request.user.username} успешно удален!")
         return redirect('account-settings')

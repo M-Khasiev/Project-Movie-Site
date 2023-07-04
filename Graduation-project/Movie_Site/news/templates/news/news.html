@@ -1,6 +1,8 @@
 {% extends 'home/base2.html' %}
 {% block base2 %}
-<div class="left-ads-display col-lg-8">
+<div class="left-ads-display col-lg-8" style="margin: 0 auto;">
+    <h1 style="font-weight: bold;">Новости кино:</h1>
+    <hr>
     <div class="row sub-para-w3layouts mt-5">
         <ul>
         {% for new in news %}
@@ -10,7 +12,6 @@
         </ul>
     </div>
     {% include 'news/pagination_news.html' with queryset=news custom_range=custom_range %}
-    <hr>
 </div>
 
 {% endblock base2 %}

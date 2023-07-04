@@ -72,6 +72,9 @@
                         </li>
                     {% endif %}
                 {% endif %}
+                <li style="list-style: none"><span class="editContent"><b>Кол-во оценок</b> : {{ movie_single.vote_total }}</span></li>
+
+                <li style="list-style: none"><span class="editContent"><b>Кол-во отзывов</b> : {{ review_body_check }}</span></li>
 
                 <li style="list-style: none">
                     {% if movie_single.vote_ratio >= 7 %}
@@ -145,7 +148,7 @@
         {% endif %}
 
 
-        <div style="width: 870px; position: absolute; margin-top: 70px;">
+        <div style="width: 950px; margin-bottom: 50px;">
   		    <div id="carouselExampleCaptions" class="carousel slide container" data-ride="carousel">
 		      <div class="carousel-inner">
 		    	  {% for image in movie_single.movieshots_set.all %}
@@ -167,7 +170,7 @@
 	    </div>
 
 
-        <p class="editContent" style="outline: none; cursor: inherit; margin-top: 500px;"><b>{{ movie_single.description|linebreaks }}</b></p>
+        <p class="editContent" style="outline: none; cursor: inherit;"><b>{{ movie_single.description|linebreaks }}</b></p>
         <p class="mt-3 italic-blue editContent"
            style="outline: none; cursor: inherit;">
             {% autoescape off %}
@@ -220,6 +223,11 @@
         {% endif %}
 
         <div class="gggggggg" style="width: 900px">
+            {% if review_body_check %}
+            <h3 class="editContent" style="outline: none; cursor: inherit; margin-top: 15px;">
+                                        <span class="sub-tittle editContent"
+                                              style="outline: none; cursor: inherit;"></span>Отзывы:</h3>
+            {% endif %}
             <div class="prfota wr prfot">
                 {% for review in movie_single.review_set.all %}
                     {% if review.body %}
@@ -227,16 +235,10 @@
                             <div class="media py-5">
                                 <div class="media-body mt-4">
                                     <h5 class="mt-0 editContent"
-                                        style="outline: none; cursor: inherit;">{{ review.owner.username }} ({{ review.created }})</h5>
+                                        style="outline: none; cursor: inherit;">{{ review.owner.username }} - {% if review.value == 'up' %} Положительная оценка {% else %} Отрицательная оценка {% endif %} ({{ review.created }})</h5>
                                     <p class="mt-2 editContent" style="outline: none; cursor: inherit;">
                                         {{ review.body|linebreaksbr }}
                                     </p>
-<!--                                    {% if user.username == review.owner.username %}-->
-<!--                                        <form action="{{ movie_single.get_absolute_url_deleting_review }}" method="POST">-->
-<!--                                            {% csrf_token %}-->
-<!--                                            <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>-->
-<!--                                        </form>-->
-<!--                                    {% endif %}-->
                                 </div>
                             </div>
                         </div>

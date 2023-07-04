@@ -143,6 +143,7 @@
 </section>
 <!-- //contact -->
 <!-- footer -->
+<hr>
 <footer class="editContent">
     <div class="container">
         <div class="row footer-top">
@@ -202,7 +203,7 @@
                                     <a href="{% url 'added' %}" class="editContent">Мои фильмы</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'added' %}" class="editContent">Пользователь: {{ request.user.username }}</a>
+                                    <a href="{% url 'account-settings' %}" class="editContent">Пользователь: {{ request.user.username }}</a>
                                 </li>
                             {% else %}
                                 <li>

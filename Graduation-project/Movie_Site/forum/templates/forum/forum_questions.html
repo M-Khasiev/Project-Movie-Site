@@ -1,0 +1,28 @@
+{% extends 'home/base3.html' %}
+{% block content %}
+<div class="left-ads-display col-lg-8" style="margin: 0 auto; margin-top: 20px;">
+    <div class="search-bar w3layouts-newsletter">
+        <h3 class="sear-head editContent">Поиск вопроса</h3>
+        <form id="search" action="{% url 'search-question' %}" method="get" class="d-flex editContent">
+            <input type="search" placeholder="Введите вопрос..." name="search_query" class="form-control"
+                   required="">
+            <button type="submit" class="btn1 btn"><span class="fa fa-search" aria-hidden="true"></span></button>
+        </form>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="{% url 'ask-question' %}"><input type="submit" value="Задать вопрос" class="editContent button8" style="cursor: pointer"></form></div>
+    <hr>
+    {% if questions %}
+        <ul class="questions_ul">
+        {% for question in questions %}
+        <li class="editContent questions" style="outline: none; text-align: center;"><a
+                href="{% url 'detail-question' question.id %}">{{ question.subject|truncatechars:25 }}<span style="font-weight: bold; color: black;"> ({{ question.user }})</span></a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    <h2 style="text-align: center; font-weight: bold;">{{ error }}</h2>
+    {% endif %}
+    {% include 'forum/pagination_questions.html' with queryset=questions custom_range=custom_range %}
+</div>
+
+{% endblock content %}
