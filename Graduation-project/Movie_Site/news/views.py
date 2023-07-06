@@ -24,6 +24,7 @@ def detail_new(request, pk):
     new_detail = News.objects.get(id=pk)
     review_body_check = true_body_news(pk)
     form = ReviewNewForm()
+    previous_page = request.META.get('HTTP_REFERER')
 
     if request.method == 'POST':
         form = ReviewNewForm(request.POST)
@@ -39,6 +40,7 @@ def detail_new(request, pk):
     context = {'news': new_detail,
                'last_added': last_added,
                'form': form,
-               'review_body_check': review_body_check
+               'review_body_check': review_body_check,
+               'previous_page': previous_page
                }
     return render(request, 'news/detail_new.html', context)

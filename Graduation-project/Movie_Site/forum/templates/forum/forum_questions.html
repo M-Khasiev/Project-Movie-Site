@@ -16,7 +16,7 @@
         <ul class="questions_ul">
         {% for question in questions %}
         <li class="editContent questions" style="outline: none; text-align: center;"><a
-                href="{% url 'detail-question' question.id %}">{{ question.subject|truncatechars:25 }}<span style="font-weight: bold; color: black;"> ({{ question.user }})</span></a></li>
+                href="{% url 'detail-question' question.id %}">{{ question.subject|truncatechars:25 }}<span style="font-weight: bold; color: grey;"> ({{ question.user }})</span></a></li>
         {% endfor %}
         </ul>
     {% else %}

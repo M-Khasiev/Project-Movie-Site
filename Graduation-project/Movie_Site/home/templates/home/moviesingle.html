@@ -38,7 +38,7 @@
                 <li style="list-style: none"><span><b>Премьера в мире: </b> {{ movie_single.world_premiere }}</span>
                 </li>
                 {% if movie_single.budget %}
-                    <li style="list-style: none">я
+                    <li style="list-style: none">
                         <span><b>Бюджет: </b> ${{ movie_single.budget|intcomma }}</span>
                     </li>
                 {% endif %}
@@ -172,14 +172,29 @@
 
         <p class="editContent" style="outline: none; cursor: inherit;"><b>{{ movie_single.description|linebreaks }}</b></p>
         <p class="mt-3 italic-blue editContent"
-           style="outline: none; cursor: inherit;">
+           style="outline: none; cursor: inherit; width: 850px;">
             {% autoescape off %}
             {{ movie_single.url_trailer }}
             {% endautoescape %}
         </p>
+        {% if movie_single.url_excerpt_movie %}
+            {% if movie_single.category_id == 1 %}
+                <h3 class="shop-sing editContent" style="width: 850px; margin-bottom: 5px;">Отрывок из фильма:</h3>
+            {% elif movie_single.category_id == 2 %}
+                <h3 class="shop-sing editContent" style="width: 850px; margin-bottom: 5px;">Отрывок из сериала:</h3>
+            {% else %}
+                <h3 class="shop-sing editContent" style="width: 850px; margin-bottom: 5px;">Отрывок из мультфильма:</h3>
+            {% endif %}
+            <p class="mt-3 italic-blue editContent"
+           style="outline: none; cursor: inherit;">
+                {% autoescape off %}
+                {{ movie_single.url_excerpt_movie }}
+                {% endautoescape %}
+            </p>
+        {% endif %}
         {% if movie_single.factsmovie_set.all %}
         <div style="margin-top: 100px">
-            <h2>Знаете ли вы, что...</h2>
+            <h2 class="shop-sing editContent">Знаете ли вы, что...</h2>
         {% for fact in movie_single.factsmovie_set.all %}
             <ul class="mt-3 editContent" style="outline: none; cursor: inherit;">
                 <li><p class="mt-3 editContent"><b>{{ fact.description }}</b></p></li>

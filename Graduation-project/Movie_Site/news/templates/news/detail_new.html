@@ -2,7 +2,9 @@
 {% block base2 %}
 
 <div class="left-ads-display col-lg-8" style="margin: 0 auto;">
+    <p><a href="{{ previous_page }}"> << Новости </a></p>
     <div class="row sub-para-w3layouts mt-5">
+
         {% if news.url_image %}
         <img src="{{ news.url_image }}" alt="" style="width: 45%; height: auto; margin: 0 auto; margin-bottom: 50px;">
         {% endif %}

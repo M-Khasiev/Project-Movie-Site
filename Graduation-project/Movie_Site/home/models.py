@@ -29,10 +29,12 @@ class Movie(models.Model):
     category = models.ForeignKey(
         'Category', verbose_name="Категория", on_delete=models.SET_NULL, null=True
     )
-    url = models.SlugField(max_length=130, unique=True)
+    url = models.SlugField('URL Slug', max_length=130, unique=True)
     vote_total = models.IntegerField('Общее количество оценок', default=0)
     vote_ratio = models.FloatField('Соотношение оценок', default=0)
-    url_trailer = models.CharField(max_length=1000, default='')
+    url_trailer = models.CharField('URL трейлера', max_length=1000, default='')
+    url_excerpt_movie = models.CharField('URL отрывка из фильма (необязательно)', max_length=1000, blank=True,
+                                         default='')
     created = models.DateTimeField('Добавлен', auto_now_add=True)
     adding_movie = models.ManyToManyField(User, default=None, blank=True,
                                           verbose_name='Какие пользователи добавили фильм')
@@ -112,7 +114,7 @@ class Actor(models.Model):
     date_of_birth = models.DateField("Дата рождения", default=date.today)
     country = models.CharField("Место рождения", max_length=100, blank=True)
     age = models.PositiveSmallIntegerField("Возраст", default=0)
-    height = models.FloatField("Рост", default=0)
+    height = models.FloatField("Рост", blank=True, default=0)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="actors/%Y/%m/%d/")
 

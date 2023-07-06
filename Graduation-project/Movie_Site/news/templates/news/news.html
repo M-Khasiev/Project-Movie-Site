@@ -7,7 +7,7 @@
         <ul>
         {% for new in news %}
         <li class="editContent news" style="outline: none;"><a
-                href="{% url 'detail-new' new.id %}">{{ new.title }}</a><span style="padding-left: 10px">({{ new.time|date:'d.m.Y'  }})</span></li>
+                href="{% url 'detail-new' new.id %}">{{ new.title }}<span style="padding-left: 5px; color: grey;">({{ new.time|date:'d.m.Y'  }})</span></a></li>
         {% endfor %}
         </ul>
     </div>

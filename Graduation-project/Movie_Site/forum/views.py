@@ -23,8 +23,10 @@ def forum(request):
 def forum_ask_question(request):
     if request.user.is_authenticated:
         form = ForumAskQuestion()
+        previous_page = request.META.get('HTTP_REFERER')
         context = {
             'form': form,
+            'previous_page': previous_page
         }
         return render(request, 'forum/forum_ask_question.html', context)
     else:
@@ -49,6 +51,7 @@ def detail_question(request, pk):
     question = QuestionUser.objects.get(id=pk)
     review_body_check = true_body_question(pk)
     form = ReviewQuestionForm()
+    previous_page = request.META.get('HTTP_REFERER')
 
     if request.method == 'POST':
         form = ReviewQuestionForm(request.POST)
@@ -64,6 +67,7 @@ def detail_question(request, pk):
         'question': question,
         'form': form,
         'review_body_check': review_body_check,
+        'previous_page': previous_page
     }
     return render(request, 'forum/detail_question.html', context)
 
