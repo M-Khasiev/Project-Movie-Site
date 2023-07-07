@@ -51,7 +51,7 @@ class Movie(models.Model):
         (18, '18+'),
     )
     age_rating = models.IntegerField('Возрастной рейтинг', default=0, choices=age_rating_movie)
-    movie_duration = models.IntegerField('Продолжительность фильма', default=0, help_text='Указывать в минутах')
+    movie_duration = models.IntegerField('Продолжительность фильма (или одной серии)', default=0, help_text='Указывать в минутах')
     newsletter = models.BooleanField('Был отправлен как рассылка', default=False)
 
     def __str__(self):

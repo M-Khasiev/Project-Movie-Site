@@ -20,12 +20,12 @@
                 <li style="list-style: none">
                     <span><b>Режиссер: </b>
                         {% for director in movie_single.directors.all %}
-                            <a href="{{ director.get_absolute_url }}">{{ director.name }}{% if not forloop.last %}, {% else %} {% endif %}</a>
+                            <a href="{{ director.get_absolute_url }}" class="pr_p">{{ director.name }}{% if not forloop.last %}, {% else %} {% endif %}</a>
                         {% endfor %}
                     </span></li>
                 <li style="list-style: none"><span><b>Актеры: </b>
                     {% for actor in movie_single.actors.all %}
-                            <a href="{{ actor.get_absolute_url }}">{{ actor.name }}{% if not forloop.last %}, {% else %} {% endif %}</a>
+                            <a href="{{ actor.get_absolute_url }}" class="pr_p">{{ actor.name }}{% if not forloop.last %}, {% else %} {% endif %}</a>
                     {% endfor %}
                     и др.
                 </span></li>
@@ -78,17 +78,17 @@
 
                 <li style="list-style: none">
                     {% if movie_single.vote_ratio >= 7 %}
-                        <a href="#" style="color: green"><b>Рейтинг:</b>
+                        <a href="{% url 'rating-movies-green' %}" style="color: green"><b>Рейтинг:</b>
                             <span class="editContent"
                                   style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie_single.vote_ratio|formatted_float }}</span>
                         </a>
                     {% elif movie_single.vote_ratio < 7 and movie_single.vote_ratio >= 5 %}
-                        <a href="#" style="color: grey"><b>Рейтинг:</b>
+                        <a href="{% url 'rating-movies-grey' %}" style="color: grey"><b>Рейтинг:</b>
                             <span class="editContent"
                                   style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie_single.vote_ratio|formatted_float }}</span>
                         </a>
                     {% elif movie_single.vote_ratio < 5 and movie_single.vote_ratio >= 0 %}
-                        <a href="#" style="color: red"><b>Рейтинг:</b>
+                        <a href="{% url 'rating-movies-red' %}" style="color: red"><b>Рейтинг:</b>
                             <span class="editContent"
                                   style="outline: none; cursor: inherit; margin-left: 3px ">{{ movie_single.vote_ratio|formatted_float }}</span>
                         </a>

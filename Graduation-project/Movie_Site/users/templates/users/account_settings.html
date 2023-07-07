@@ -32,7 +32,7 @@
                     {% csrf_token %}
                     <ul class="hr_2">
                         <li>
-                            <h5 style="padding-top: 10px"><a href="{{ review_account.movie.get_absolute_url }}">{{ review_account.movie.title }}</a> {% if review_account.value == 'up' %}( Положительная оценка ) {% else %} ( Отрицательная оценка ) {% endif %}</h5>
+                            <h5 style="padding-top: 10px"><a href="{{ review_account.movie.get_absolute_url }}">{{ review_account.movie.title }} {% if review_account.value == 'up' %}( Положительная оценка ) {% else %} ( Отрицательная оценка ) {% endif %}</a></h5>
                         </li>
                         <li>
                             <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>
@@ -53,7 +53,7 @@
                     {% csrf_token %}
                     <ul class="hr_2">
                         <li>
-                            <h5 style="padding-top: 10px"><a href="{% url 'detail-new' review_news_account.news.id %}">{{ review_news_account.news.title }}</a> ({{ review_news_account.body|truncatechars:20 }})</h5>
+                            <h5 style="padding-top: 10px"><a href="{% url 'detail-new' review_news_account.news.id %}">{{ review_news_account.news.title }} ({{ review_news_account.body|truncatechars:20 }})</a></h5>
                         </li>
                         <li>
                             <button style="float: right; cursor: pointer;" class="editContent button10">Удалить</button>

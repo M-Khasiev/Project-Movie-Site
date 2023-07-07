@@ -1713,7 +1713,7 @@ a:hover{
     font-weight: bold;
 }
 .news:hover{
-    border: #ff0000 solid 1px;
+    border: #ff4c4c solid 1px;
     background-color: #ffe0e0;
 }
 
@@ -1725,7 +1725,7 @@ a:hover{
 }
 
 .news a:hover{
-    color: #ff0000;
+    color: #ff4c4c;
 }
 
 .pagination_news {
@@ -1831,6 +1831,14 @@ a:hover{
     padding: 3px; /* Поля вокруг текста */
    }
 
+   ul.hr a, ul.hr_2 a {
+        color:#101315;
+   }
+
+   ul.hr a, ul.hr_2 a:hover {
+    color:#ff4c4c;
+}
+
    .captcha{
     margin-bottom: 10px;
     width: 100px;
@@ -1887,12 +1895,19 @@ a:hover{
     color:  #1e272e;
    }
    .questions_ul li:hover{
-    border: #ff0000 solid 1px;
+    border: #ff4c4c solid 1px;
     background-color: #ffe0e0;
    }
 
    .questions_ul li a:hover{
-    color: #ff0000;
+    color: #ff4c4c;
+   }
+
+   .pr_p{
+    color: #101315;
+   }
+   .pr_p:hover{
+    color: #ff4c4c;
    }
 
    /* .questions{

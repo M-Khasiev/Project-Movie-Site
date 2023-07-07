@@ -11,7 +11,7 @@
         </form>
     </div>
     <hr>
-    <p><a href="{{ previous_page }}"> << К вопросам </a></p>
+    <p><a href="{{ previous_page }}" class="pr_p"> << К вопросам </a></p>
     <h3 style="margin-bottom: 20px;"> {{ question.subject }} {{ question.user }} - ({{ question.created }})</h3>
     <div>{% autoescape off %}{{ question.question }}{% endautoescape %}</div>
     <hr>

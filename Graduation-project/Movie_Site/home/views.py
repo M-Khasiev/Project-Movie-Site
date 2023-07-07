@@ -207,8 +207,10 @@ def checkbox_search_year(request):
 def actor_detail(request, slug):
     """Вывод полной информации об актёре"""
     actor = Actor.objects.get(name=slug)
+    previous_page = request.META.get('HTTP_REFERER')
     context = {
         'actor': actor,
         'last_added': last_added(),
+        'previous_page': previous_page,
     }
     return render(request, 'home/actor.html', context)

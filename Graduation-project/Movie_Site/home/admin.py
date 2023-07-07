@@ -36,6 +36,7 @@ class MovieAdmin(admin.ModelAdmin):
     inlines = [MovieShotsInline, FactsMovieInline, ReviewInline]
     save_on_top = True
     readonly_fields = ("get_image",)
+    autocomplete_fields = ('directors', 'actors', 'genres')
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.poster.url} width="90" height="130"')
@@ -51,6 +52,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class GenreAdmin(admin.ModelAdmin):
     """Жанры"""
+    search_fields = ('name',)
     list_display = ("name", "url")
 
 
