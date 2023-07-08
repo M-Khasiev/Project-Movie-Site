@@ -52,7 +52,7 @@ class Movie(models.Model):
     )
     age_rating = models.IntegerField('Возрастной рейтинг', default=0, choices=age_rating_movie)
     movie_duration = models.IntegerField('Продолжительность фильма (или одной серии)', default=0, help_text='Указывать в минутах')
-    newsletter = models.BooleanField('Был отправлен как рассылка', default=False)
+    newsletter = models.BooleanField('Отправлен как рассылка', default=False)
 
     def __str__(self):
         return self.title
@@ -109,7 +109,7 @@ class Category(models.Model):
 
 class Actor(models.Model):
     """Актеры и режиссеры"""
-    name = models.CharField("Имя", max_length=100)
+    name = models.CharField("Имя", max_length=100, unique=True)
     eng_name = models.CharField("Имя на английском", max_length=100, default='')
     date_of_birth = models.DateField("Дата рождения", default=date.today)
     country = models.CharField("Место рождения", max_length=100, blank=True)

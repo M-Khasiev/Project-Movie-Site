@@ -23,7 +23,7 @@ class ReviewQuestion(models.Model):
     """Отзыв к вопросу"""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь')
     question_user = models.ForeignKey(QuestionUser, on_delete=models.CASCADE, verbose_name='Вопрос пользователя')
-    body = models.TextField(default='', verbose_name='Отзыв')
+    body = models.TextField(default='', verbose_name='Комментарий')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
 
     def __str__(self):
@@ -31,5 +31,5 @@ class ReviewQuestion(models.Model):
 
     class Meta:
         ordering = ["created"]
-        verbose_name = "Отзыв к вопросу"
-        verbose_name_plural = "Отзыв к вопросу"
+        verbose_name = "Комментарии к вопросу"
+        verbose_name_plural = "Комментарии к вопросу"

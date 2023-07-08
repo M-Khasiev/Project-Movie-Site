@@ -23,7 +23,7 @@ class ReviewNews(models.Model):
     """Отзыв новости"""
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Пользователь')
     news = models.ForeignKey(News, on_delete=models.CASCADE, verbose_name='Новость')
-    body = models.TextField(default='', verbose_name='Отзыв')
+    body = models.TextField(default='', verbose_name='Комментарий')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
 
     def __str__(self):
@@ -31,5 +31,5 @@ class ReviewNews(models.Model):
 
     class Meta:
         ordering = ["created"]
-        verbose_name = "Отзыв новости"
-        verbose_name_plural = "Отзыв новости"
+        verbose_name = "Комментарии к новостям"
+        verbose_name_plural = "Комментарии к новостям"

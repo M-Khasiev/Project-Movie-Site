@@ -18,15 +18,23 @@
                 <li style="list-style: none"><span><b>Рост: </b> {% if actor.height %}{{ actor.height|formatted_float_2 }} м {% else %} - {% endif %}</span></li>
                 <li style="list-style: none">
                     <span><b>Режиссер: </b>
-                        {% for movie in actor.film_director.all %}
-                            <a href="{{ movie.get_absolute_url }}" class="pr_p">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
-                        {% endfor %}
+                        {% if actor.film_director.all %}
+                            {% for movie in actor.film_director.all %}
+                                <a href="{{ movie.get_absolute_url }}" class="pr_p">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
                     </span></li>
                 <li style="list-style: none">
                     <span><b>Актер: </b>
-                    {% for movie in actor.film_actor.all %}
-                            <a href="{{ movie.get_absolute_url }}" class="pr_p">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
-                    {% endfor %}
+                        {% if actor.film_actor.all %}
+                            {% for movie in actor.film_actor.all %}
+                                    <a href="{{ movie.get_absolute_url }}" class="pr_p">{{ movie.title }}{% if not forloop.last %}, {% else %} {% endif %}</a>
+                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
                     </span>
                 </li>
             </ul>

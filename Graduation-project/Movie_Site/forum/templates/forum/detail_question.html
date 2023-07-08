@@ -12,8 +12,8 @@
     </div>
     <hr>
     <p><a href="{{ previous_page }}" class="pr_p"> << К вопросам </a></p>
-    <h3 style="margin-bottom: 20px;"> {{ question.subject }} {{ question.user }} - ({{ question.created }})</h3>
-    <div>{% autoescape off %}{{ question.question }}{% endautoescape %}</div>
+    <h3 style="margin-bottom: 20px;"> {{ question.subject }} <span style="color: grey;">{{ question.user }} - ({{ question.created }})</span></h3>
+    <div style="font-weight: bold;">{% autoescape off %}{{ question.question }}{% endautoescape %}</div>
     <hr>
     <div class="row">
     {% if request.user.is_authenticated %}

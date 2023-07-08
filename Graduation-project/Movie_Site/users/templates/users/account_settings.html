@@ -45,7 +45,7 @@
     <h5>Вы не оставляли фильму отзыв и оценку.</h5>
     {% endif %}
     <hr>
-    <h5 style="margin-bottom: 30px;">Отзывы новостей:</h5>
+    <h5 style="margin-bottom: 30px;">Комментарии к новостям:</h5>
     {% if availability_news %}
         {% for review_news_account in review_news %}
             {% if review_news_account.owner_id == user.id %}
@@ -63,7 +63,7 @@
             {% endif %}
         {% endfor %}
     {% else %}
-    <h5>Вы не оставляли отзыв.</h5>
+    <h5>Вы не оставляли комментариев.</h5>
     {% endif %}
     <hr>
     <h5 style="margin-bottom: 30px;">Вопросы на форуме:</h5>
@@ -87,7 +87,7 @@
     <h5>Вы не задавали вопросов на форуме.</h5>
     {% endif %}
     <hr>
-    <h5 style="margin-bottom: 30px;">Отзывы к вопросам на форуме:</h5>
+    <h5 style="margin-bottom: 30px;">Комментарии к вопросам на форуме:</h5>
     {% if availability_question_review %}
         {% for question_review in forum_question_review %}
             {% if question_review.owner_id == user.id %}
@@ -105,7 +105,7 @@
             {% endif %}
         {% endfor %}
     {% else %}
-    <h5>Вы не оставляли отзывов к вопросам на форуме.</h5>
+    <h5>Вы не оставляли комментариев к вопросам на форуме.</h5>
     {% endif %}
 
 </div>

@@ -71,7 +71,7 @@ def func_name_2(sender, instance, created, **kwargs):
         html = f"""
             <html>
             <head></head>
-                    <img src="{movie.url_image}" alt="" style="margin: 0 auto;">
+                    <img src="{movie.url_image}" alt="" width="400" height="600" style="margin: 0 auto;">
                     <p>"{movie.title}"</p>
                     <p>Для полной информации о {cat}е перейдите на сайт <a href="#">https://www.Movie-Site.ru/</a></p>
             </html>
