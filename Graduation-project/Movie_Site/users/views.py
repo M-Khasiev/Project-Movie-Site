@@ -115,7 +115,7 @@ def add_movie(request, slug):
     if request.method == "POST":
         movie_single.adding_movie.add(request.user.id)
         movie_single.save()
-        messages.success(request, f"Добавлен в 'Мои фильмы'")
+        messages.success(request, f"Добавлен в раздел 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
 
 

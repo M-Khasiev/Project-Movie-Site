@@ -38,9 +38,9 @@ class Movie(models.Model):
     created = models.DateTimeField('Добавлен', auto_now_add=True)
     adding_movie = models.ManyToManyField(User, default=None, blank=True,
                                           verbose_name='Какие пользователи добавили фильм')
-    kinopoisk_url = models.URLField('Кинопоиск', default='')
+    kinopoisk_url = models.URLField('URL Кинопоиск', default='')
     kinopoisk_rating = models.FloatField('Рейтинг Кинопоиска', default=0)
-    imdb_url = models.URLField('IMDb', default='')
+    imdb_url = models.URLField('URL IMDb', default='')
     imdb_rating = models.FloatField('Рейтинг IMDb', default=0)
     eng_title = models.CharField("Название на английском", max_length=100, default='')
     age_rating_movie = (
