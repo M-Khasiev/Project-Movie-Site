@@ -125,7 +125,7 @@ def deleting_added(request, slug):
     movie_single = Movie.objects.get(url=slug)
     if request.method == "POST":
         movie_single.adding_movie.remove(request.user.id)
-        messages.error(request, f"Удален из 'Мои фильмы'")
+        messages.error(request, f"Удален из раздела 'Мои фильмы'")
         return redirect(movie_single.get_absolute_url())
 
 
